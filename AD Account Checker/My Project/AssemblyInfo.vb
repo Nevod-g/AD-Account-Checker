@@ -1,4 +1,5 @@
-﻿Imports System
+﻿Imports System.Resources
+Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
@@ -8,11 +9,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("FluentDesignApp")>
-<Assembly: AssemblyDescription("")>
+<Assembly: AssemblyTitle("AD Account Checker")>
+<Assembly: AssemblyDescription("Allows to import and check the list of users from Excel format, using LDAP, the existence of an account in AD is checked.")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("FluentDesignApp")>
-<Assembly: AssemblyCopyright("Copyright ©  2018")>
+<Assembly: AssemblyProduct("AD Account Checker")>
+<Assembly: AssemblyCopyright("Copyright ©  2023")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -31,5 +32,6 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("0.0.0.0")>
+<Assembly: AssemblyFileVersion("0.0.0.0")>
+<Assembly: NeutralResourcesLanguage("en-US")>
