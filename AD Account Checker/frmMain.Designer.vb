@@ -23,25 +23,25 @@ Partial Class frmMain
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim AccordionContextButton2 As DevExpress.XtraBars.Navigation.AccordionContextButton = New DevExpress.XtraBars.Navigation.AccordionContextButton()
+        Dim AccordionContextButton3 As DevExpress.XtraBars.Navigation.AccordionContextButton = New DevExpress.XtraBars.Navigation.AccordionContextButton()
         Me.FluentDesignFormContainer1 = New DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormContainer()
         Me.gcAccounts = New DevExpress.XtraGrid.GridControl()
         Me.gvAccounts = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.GridColumn1 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.GridColumn2 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.FluentFormDefaultManager = New DevExpress.XtraBars.FluentDesignSystem.FluentFormDefaultManager(Me.components)
         Me.bbiCompare = New DevExpress.XtraBars.BarButtonItem()
         Me.bbiImport = New DevExpress.XtraBars.BarButtonItem()
         Me.bbiImportExcel = New DevExpress.XtraBars.BarButtonItem()
         Me.bbiCompareAccounts = New DevExpress.XtraBars.BarButtonItem()
-        Me.AccordionControl1 = New DevExpress.XtraBars.Navigation.AccordionControl()
-        Me.AccordionControlElement1 = New DevExpress.XtraBars.Navigation.AccordionControlElement()
+        Me.AccordionControl = New DevExpress.XtraBars.Navigation.AccordionControl()
+        Me.aceDomainControllers = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.FluentDesignFormControl1 = New DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl()
-        Me.GridColumn1 = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.GridColumn2 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.FluentDesignFormContainer1.SuspendLayout()
         CType(Me.gcAccounts, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gvAccounts, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.FluentFormDefaultManager, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.AccordionControl1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.AccordionControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.FluentDesignFormControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -49,27 +49,52 @@ Partial Class frmMain
         '
         Me.FluentDesignFormContainer1.Controls.Add(Me.gcAccounts)
         Me.FluentDesignFormContainer1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.FluentDesignFormContainer1.Location = New System.Drawing.Point(260, 37)
+        Me.FluentDesignFormContainer1.Location = New System.Drawing.Point(223, 30)
+        Me.FluentDesignFormContainer1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.FluentDesignFormContainer1.Name = "FluentDesignFormContainer1"
-        Me.FluentDesignFormContainer1.Size = New System.Drawing.Size(830, 639)
+        Me.FluentDesignFormContainer1.Size = New System.Drawing.Size(711, 519)
         Me.FluentDesignFormContainer1.TabIndex = 0
         '
         'gcAccounts
         '
         Me.gcAccounts.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gcAccounts.EmbeddedNavigator.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.gcAccounts.Location = New System.Drawing.Point(0, 0)
         Me.gcAccounts.MainView = Me.gvAccounts
+        Me.gcAccounts.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.gcAccounts.MenuManager = Me.FluentFormDefaultManager
         Me.gcAccounts.Name = "gcAccounts"
-        Me.gcAccounts.Size = New System.Drawing.Size(830, 639)
+        Me.gcAccounts.Size = New System.Drawing.Size(711, 519)
         Me.gcAccounts.TabIndex = 0
+        Me.gcAccounts.UseDirectXPaint = DevExpress.Utils.DefaultBoolean.[True]
         Me.gcAccounts.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.gvAccounts})
         '
         'gvAccounts
         '
         Me.gvAccounts.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.GridColumn1, Me.GridColumn2})
+        Me.gvAccounts.DetailHeight = 284
         Me.gvAccounts.GridControl = Me.gcAccounts
         Me.gvAccounts.Name = "gvAccounts"
+        Me.gvAccounts.OptionsBehavior.AllowPixelScrolling = DevExpress.Utils.DefaultBoolean.[True]
+        Me.gvAccounts.OptionsDetail.EnableMasterViewMode = False
+        '
+        'GridColumn1
+        '
+        Me.GridColumn1.Caption = "SID"
+        Me.GridColumn1.MinWidth = 21
+        Me.GridColumn1.Name = "GridColumn1"
+        Me.GridColumn1.Visible = True
+        Me.GridColumn1.VisibleIndex = 0
+        Me.GridColumn1.Width = 81
+        '
+        'GridColumn2
+        '
+        Me.GridColumn2.Caption = "Name"
+        Me.GridColumn2.MinWidth = 21
+        Me.GridColumn2.Name = "GridColumn2"
+        Me.GridColumn2.Visible = True
+        Me.GridColumn2.VisibleIndex = 1
+        Me.GridColumn2.Width = 81
         '
         'FluentFormDefaultManager
         '
@@ -105,29 +130,34 @@ Partial Class frmMain
         Me.bbiCompareAccounts.ImageOptions.SvgImage = Global.Adac.My.Resources.Resources.productquickcomparisons
         Me.bbiCompareAccounts.Name = "bbiCompareAccounts"
         '
-        'AccordionControl1
+        'AccordionControl
         '
-        Me.AccordionControl1.Dock = System.Windows.Forms.DockStyle.Left
-        Me.AccordionControl1.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.AccordionControlElement1})
-        Me.AccordionControl1.Location = New System.Drawing.Point(0, 37)
-        Me.AccordionControl1.Name = "AccordionControl1"
-        Me.AccordionControl1.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Touch
-        Me.AccordionControl1.Size = New System.Drawing.Size(260, 639)
-        Me.AccordionControl1.TabIndex = 1
-        Me.AccordionControl1.ViewType = DevExpress.XtraBars.Navigation.AccordionControlViewType.HamburgerMenu
+        Me.AccordionControl.Dock = System.Windows.Forms.DockStyle.Left
+        Me.AccordionControl.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.aceDomainControllers})
+        Me.AccordionControl.ExpandElementMode = DevExpress.XtraBars.Navigation.ExpandElementMode.Multiple
+        Me.AccordionControl.Location = New System.Drawing.Point(0, 30)
+        Me.AccordionControl.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
+        Me.AccordionControl.Name = "AccordionControl"
+        Me.AccordionControl.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Fluent
+        Me.AccordionControl.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always
+        Me.AccordionControl.Size = New System.Drawing.Size(223, 519)
+        Me.AccordionControl.TabIndex = 1
+        Me.AccordionControl.UseDirectXPaint = DevExpress.Utils.DefaultBoolean.[True]
+        Me.AccordionControl.ViewType = DevExpress.XtraBars.Navigation.AccordionControlViewType.HamburgerMenu
         '
-        'AccordionControlElement1
+        'aceDomainControllers
         '
-        AccordionContextButton2.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center
-        AccordionContextButton2.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far
-        AccordionContextButton2.Id = New System.Guid("c8ae9975-ab2e-4b0b-aa8b-681d7d4cca7b")
-        AccordionContextButton2.ImageOptionsCollection.ItemNormal.SvgImage = Global.Adac.My.Resources.Resources.actions_addcircled
-        AccordionContextButton2.ImageOptionsCollection.ItemNormal.SvgImageSize = New System.Drawing.Size(16, 16)
-        AccordionContextButton2.Name = "acbAddAd"
-        Me.AccordionControlElement1.ContextButtons.Add(AccordionContextButton2)
-        Me.AccordionControlElement1.Expanded = True
-        Me.AccordionControlElement1.Name = "AccordionControlElement1"
-        Me.AccordionControlElement1.Text = "Active Directories"
+        AccordionContextButton3.AlignmentOptions.Panel = DevExpress.Utils.ContextItemPanel.Center
+        AccordionContextButton3.AlignmentOptions.Position = DevExpress.Utils.ContextItemPosition.Far
+        AccordionContextButton3.Id = New System.Guid("c8ae9975-ab2e-4b0b-aa8b-681d7d4cca7b")
+        AccordionContextButton3.ImageOptionsCollection.ItemNormal.SvgImage = Global.Adac.My.Resources.Resources.actions_addcircled
+        AccordionContextButton3.ImageOptionsCollection.ItemNormal.SvgImageSize = New System.Drawing.Size(16, 16)
+        AccordionContextButton3.Name = "acbAddDomainController"
+        AccordionContextButton3.Visibility = DevExpress.Utils.ContextItemVisibility.Visible
+        Me.aceDomainControllers.ContextButtons.Add(AccordionContextButton3)
+        Me.aceDomainControllers.Expanded = True
+        Me.aceDomainControllers.Name = "aceDomainControllers"
+        Me.aceDomainControllers.Text = "Domain Controllers"
         '
         'FluentDesignFormControl1
         '
@@ -135,58 +165,43 @@ Partial Class frmMain
         Me.FluentDesignFormControl1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.bbiCompare, Me.bbiImport, Me.bbiImportExcel, Me.bbiCompareAccounts})
         Me.FluentDesignFormControl1.Location = New System.Drawing.Point(0, 0)
         Me.FluentDesignFormControl1.Manager = Me.FluentFormDefaultManager
+        Me.FluentDesignFormControl1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.FluentDesignFormControl1.Name = "FluentDesignFormControl1"
-        Me.FluentDesignFormControl1.Size = New System.Drawing.Size(1090, 37)
+        Me.FluentDesignFormControl1.Size = New System.Drawing.Size(934, 30)
         Me.FluentDesignFormControl1.TabIndex = 2
         Me.FluentDesignFormControl1.TabStop = False
         Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiImportExcel)
         Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiCompareAccounts)
         '
-        'GridColumn1
-        '
-        Me.GridColumn1.Caption = "SID"
-        Me.GridColumn1.MinWidth = 25
-        Me.GridColumn1.Name = "GridColumn1"
-        Me.GridColumn1.Visible = True
-        Me.GridColumn1.VisibleIndex = 0
-        Me.GridColumn1.Width = 94
-        '
-        'GridColumn2
-        '
-        Me.GridColumn2.Caption = "Name"
-        Me.GridColumn2.MinWidth = 25
-        Me.GridColumn2.Name = "GridColumn2"
-        Me.GridColumn2.Visible = True
-        Me.GridColumn2.VisibleIndex = 1
-        Me.GridColumn2.Width = 94
-        '
         'frmMain
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1090, 676)
+        Me.ClientSize = New System.Drawing.Size(934, 549)
         Me.ControlContainer = Me.FluentDesignFormContainer1
         Me.Controls.Add(Me.FluentDesignFormContainer1)
-        Me.Controls.Add(Me.AccordionControl1)
+        Me.Controls.Add(Me.AccordionControl)
         Me.Controls.Add(Me.FluentDesignFormControl1)
         Me.FluentDesignFormControl = Me.FluentDesignFormControl1
         Me.IconOptions.Image = Global.Adac.My.Resources.Resources.leftright_32x32
+        Me.IconOptions.LargeImage = Global.Adac.My.Resources.Resources.leftright_32x32
+        Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Name = "frmMain"
-        Me.NavigationControl = Me.AccordionControl1
+        Me.NavigationControl = Me.AccordionControl
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "AD Account Checker"
         Me.FluentDesignFormContainer1.ResumeLayout(False)
         CType(Me.gcAccounts, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.gvAccounts, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.FluentFormDefaultManager, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.AccordionControl1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.AccordionControl, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.FluentDesignFormControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents FluentDesignFormContainer1 As DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormContainer
-    Friend WithEvents AccordionControl1 As DevExpress.XtraBars.Navigation.AccordionControl
-    Friend WithEvents AccordionControlElement1 As DevExpress.XtraBars.Navigation.AccordionControlElement
+    Friend WithEvents AccordionControl As DevExpress.XtraBars.Navigation.AccordionControl
+    Friend WithEvents aceDomainControllers As DevExpress.XtraBars.Navigation.AccordionControlElement
     Friend WithEvents FluentDesignFormControl1 As DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl
     Friend WithEvents FluentFormDefaultManager As DevExpress.XtraBars.FluentDesignSystem.FluentFormDefaultManager
     Friend WithEvents gcAccounts As DevExpress.XtraGrid.GridControl
