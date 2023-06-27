@@ -21,7 +21,6 @@ Public Class frmAddAdController
         AdControllers.Add(AdController)
         DbXmlWizard.SaveList(AdControllers, Core.APP_DIR_PATH, AdController.DATA_FILE_NAME, Now)
         frmMain.AddAdController(AdController) ' Добавить новую Клавишу-Сервер в акордеон
-
         Me.Close()
     End Sub
 End Class

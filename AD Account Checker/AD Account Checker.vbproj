@@ -97,6 +97,10 @@
     <Compile Include="frmMain.Designer.vb">
       <DependentUpon>frmMain.vb</DependentUpon>
     </Compile>
+    <Compile Include="frmWait.Designer.vb" />
+    <Compile Include="frmWait.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Models\AdObject.vb" />
     <Compile Include="Models\AdController.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -115,6 +119,7 @@
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmWait.resx" />
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
