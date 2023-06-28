@@ -42,17 +42,23 @@
   <PropertyGroup>
     <StartupObject>Adac.My.MyApplication</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>AD.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.Data.v22.2" />
     <Reference Include="DevExpress.Data.Desktop.v22.2" />
+    <Reference Include="DevExpress.Dialogs.v22.2.Core, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Printing.v22.2.Core, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Utils.v22.2" />
     <Reference Include="DevExpress.XtraBars.v22.2" />
+    <Reference Include="DevExpress.XtraDialogs.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v22.2" />
     <Reference Include="DevExpress.Drawing.v22.2" />
     <Reference Include="DevExpress.XtraGrid.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraPrinting.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraTreeList.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="ProcessBank.Agent">
       <HintPath>Resources\ProcessBank.Agent.dll</HintPath>
     </Reference>
@@ -60,6 +66,7 @@
       <HintPath>Resources\ProcessBank.Xpo.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.DirectoryServices" />
@@ -83,8 +90,31 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdRepository.vb" />
-    <Compile Include="Core.vb" />
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="frmAdObject.Designer.vb">
+      <DependentUpon>frmAdObject.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAdObject.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Models\UserAccount.vb" />
+    <Compile Include="System\AdRepository.vb" />
+    <Compile Include="System\AppException.vb" />
+    <Compile Include="System\Core.vb" />
+    <Compile Include="System\frmException.Designer.vb">
+      <DependentUpon>frmException.vb</DependentUpon>
+    </Compile>
+    <Compile Include="System\frmException.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="System\frmWait.Designer.vb">
+      <DependentUpon>frmWait.vb</DependentUpon>
+    </Compile>
+    <Compile Include="System\frmWait.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="System\Message.vb" />
+    <Compile Include="Tools\ExcelActiveUsersParser.vb" />
     <Compile Include="frmAddAdController.Designer.vb">
       <DependentUpon>frmAddAdController.vb</DependentUpon>
     </Compile>
@@ -97,12 +127,9 @@
     <Compile Include="frmMain.Designer.vb">
       <DependentUpon>frmMain.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmWait.Designer.vb" />
-    <Compile Include="frmWait.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Models\AdObject.vb" />
     <Compile Include="Models\AdController.vb" />
+    <Compile Include="Models\IdName.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
@@ -112,14 +139,21 @@
     <Compile Include="Tools\Binding\DbEditorController.vb" />
     <Compile Include="Tools\Binding\DbEditorTag.vb" />
     <Compile Include="Tools\DbXmlWizard.vb" />
+    <Compile Include="Tools\Dx.vb" />
     <Compile Include="Tools\Ldap.vb" />
+    <Compile Include="Tools\_Graphic.vb" />
     <EmbeddedResource Include="frmAddAdController.resx">
       <DependentUpon>frmAddAdController.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAdObject.resx">
+      <DependentUpon>frmAdObject.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmWait.resx" />
+    <EmbeddedResource Include="System\frmException.resx">
+      <DependentUpon>frmException.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\licenses.licx" />
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -132,6 +166,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="System\frmWait.resx">
+      <DependentUpon>frmWait.vb</DependentUpon>
+    </EmbeddedResource>
+    <None Include="..\.editorconfig">
+      <Link>.editorconfig</Link>
+    </None>
     <None Include="app.config" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -159,16 +199,27 @@
     <None Include="Resources\actions_addcircled.svg" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\leftright_32x32.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\servermode_16x16.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\breakingchange_16x16.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bofolder_16x16.png" />
+    <None Include="Resources\bo_attention.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AD.ico" />
+    <None Include="Resources\info_32x32.png" />
+    <None Include="Resources\info_16x16.png" />
+    <None Include="Resources\next_16x16.png" />
+    <None Include="Resources\new_16x16.png" />
+    <None Include="Resources\deleterows_32x32.png" />
+    <None Include="Resources\deleterows_16x16.png" />
+    <None Include="Resources\clear_32x32.png" />
+    <None Include="Resources\clear_16x16.png" />
+    <None Include="Resources\clearall_32x32.png" />
+    <None Include="Resources\clearall_16x16.png" />
+    <None Include="Resources\AD.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

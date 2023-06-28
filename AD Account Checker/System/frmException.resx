@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <metadata name="SvgImageCollection.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="frmException.HtmlTemplate.Styles" xml:space="preserve">
+    <value>body{
+	padding: 14px;
+}
+.titleBar{
+	padding: 0px 0px 0px 0px;
+	display: flex;
+	flex-direction: row;
+	height: 38px;	
+	background-color: @Critical/0.9;
+	border-radius: 11px 11px 0px 0px;
+}
+.titleImage {
+	width: 38px;
+    height: 38px;
+	margin: 0px 0px 0px 0px;
+	padding: 0px;
+}
+.shadowFrame{
+	height: 100%;
+	border-radius: 14px;
+	box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.1);
+}
+.frame{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	border-radius: 12px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background-color: @Control;
+	box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.05);
+}
+.footerBar{
+	padding: 11px 0px 11px 10px;
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	height: 24px;
+	background-color: @ControlText/0.05;
+	border-radius: 0px 0px 13px 13px;
+}
+.messageText{
+	padding: 4px 14px 8px 14px;
+	display: flex;
+	justify-content: center;
+	align-items: left;
+	flex-direction: column;
+	align-self: center;
+	font: 14px 'Segoe UI';
+	color: @ControlText;
+}
+.descriptionText{
+	margin: 0px 0px -38px 0px;
+	padding: 4px 14px 0px 14px;
+	display: block;
+	justify-content: center;
+	align-items: left;
+	flex-direction: column;
+	align-self: center;
+	font: 12px 'Segoe UI';
+	color: @InfoText/0.6;
+	/*background-color: @ControlText/0.1;*/
+}
+.content{
+	flex-grow: 1;
+}
+.abortImage {
+	margin: 0px 0px 0px 2px;
+	padding: 4px;
+	opacity: 0.5;
+	width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+}
+.mailImage {
+	margin: 0px 0px 0px 2px;
+	padding: 4px;
+	opacity: 1;
+	width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+}
+.closeBtnImage{	
+	margin: 0px 0px 0px 0px;
+	padding: -2px;
+	width: 32px;
+    height: 32px;
+}
+.cancelImage {
+	margin: 0px 0px 0px 2px;
+	padding: 4px;
+	width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
+}
+.panelSpace{
+	flex-grow: 1;
+}
+.btnClose {
+	height: 28px;
+	width: 28px;	
+	margin: 4px 4px 4px 4px;
+	padding: 1px;
+	opacity: 0.9;
+	object-fit: none;
+	border-radius: 12px;
+}
+.btnClose:hover{
+	border-radius: 8px;
+	background-color: @ControlText/0.2;
+}
+.btnClose:active{
+	opacity: 0.25;
+	border-radius: 8px;
+	background-color: @ControlText/0.2;
+}
+.copyBtn {
+	height: 24px;
+	width: 24px;	
+	margin: 4px 4px 4px 4px;
+	padding: 1px;
+	opacity: 0.3;
+	object-fit: none;
+	border-radius: 12px;
+	justify-content: space-between;
+	flex-direction: column;
+	align-self: flex-end;
+}
+	.copyBtn:hover{
+		opacity: 0.5;
+		padding: 2px;
+		/*border-radius: 8px;
+		background-color: @ControlText/0.2;*/
+	}
+	.copyBtn:active{
+		opacity: 0.25;
+		padding: 1px;
+		/*border-radius: 8px;
+		background-color: @ControlText/0.2;*/
+	}
+	.copyBtnImage{	
+	margin: 0px 0px 0px 0px;
+	padding: 1px;
+	width: 24px;
+    height: 24px;
+	}
+
+.abortBtn{
+	background-color: @Control;
+	height: 32px;
+	width: 80px;	
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 18px;
+	margin-right: 13px;
+	color: @Gray;
+	opacity: 0.9;
+	border-color: @Gray;
+}
+	.abortBtn:active{
+		opacity: 1;
+	}
+	.abortBtn:hover{			
+		box-shadow: 0px 2px 8px @Critical/0.5;
+	}
+	.abortBtnText{
+		font: 14px 'Segoe UI';
+		margin-bottom: 2px;
+		margin-left: 0px;
+	}
+
+.mailBtn{
+	background-color: @Blue/0.1;
+	height: 32px;
+	width: 112px;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 18px;
+	margin-right: 13px;
+	color: @Blue;
+	opacity: 0.9;
+	border-color: @Primary;
+}
+	.mailBtn:active{
+		opacity: 1;
+	}
+	.mailBtn:hover{			
+		box-shadow: 0px 2px 8px @Primary/0.5;
+	}
+	.mailBtnText{
+		font: 14px 'Segoe UI';
+		margin-bottom: 2px;
+		margin-left: 0px;
+	}
+
+.cancelBtn{
+	background-color: @Control;
+	height: 32px;
+	width: 86px;
+	border-style: none;
+	border-width: 1px;
+	border-radius: 18px;
+	margin-right: 13px;
+	color: @Black;
+}
+	.cancelBtn:active{
+		opacity: 1;
+	}
+	.cancelBtn:hover{			
+		box-shadow: 0px 2px 8px @Gray/0.5;	
+	}
+	.cancelBtnText{
+		font: 14px 'Segoe UI';
+		margin-bottom: 2px;
+		margin-left: 0px;
+	}
+	
+.btnContainer{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-left: 1px;
+}
+.btnText{
+	font: 14px 'Segoe UI';
+	margin-bottom: 2px;
+	margin-left: 0px;
+}
+.separator{
+    width:100%;
+    height:1px;
+    background-color:@Gray/0.8;
+}</value>
+  </data>
+  <data name="frmException.HtmlTemplate.Template" xml:space="preserve">
+    <value>&lt;div class="shadowFrame"&gt;
+	&lt;div class="frame" id="frame"&gt;
+		&lt;div class="titleBar"&gt;			
+			&lt;dx-form-icon id="icon" class="titleImage"&gt;&lt;/dx-form-icon&gt;
+			&lt;dx-form-text id="text"&gt;&lt;/dx-form-text&gt;			
+			&lt;div class="btnClose" id="closeBtn"&gt;
+                &lt;img class="closeBtnImage" id="closeBtnImage" src="close" /&gt;				
+            &lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="content" id="content"&gt;
+			&lt;div class="messageText" id="msg"&gt;
+				${Message}				
+			&lt;/div&gt;
+			&lt;div class="separator"&gt;&lt;/div&gt;
+			&lt;div class="descriptionText" id="description"&gt;
+				${Description}
+			&lt;/div&gt;
+		&lt;/div&gt;
+		&lt;div class="copyBtn" id="copyBtn"&gt;
+            &lt;img class="copyBtnImage" id="copyBtnImage" src="copy" /&gt;				
+        &lt;/div&gt;
+		&lt;div class="footerBar"&gt;			
+			&lt;div class="abortBtn" id="abortBtn"&gt;
+				&lt;div class="btnContainer" id="abortBtnContainer"&gt;
+					&lt;img class="abortImage" id="abortBtnImage" src="abort" /&gt;
+					&lt;div class="abortBtnText" id="abortBtnText"&gt;Abort&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;div class="panelSpace"&gt;&lt;/div&gt;
+			&lt;div class="mailBtn" id="mailBtn"&gt;
+				&lt;div class="btnContainer" id="mailBtnContainer"&gt;
+					&lt;img class="mailImage" id="mailBtnImage" src="mail" /&gt;
+					&lt;div class="mailBtnText" id="mailBtnText"&gt;Send Email&lt;/div&gt;
+				&lt;/div&gt;
+			&lt;/div&gt;
+			&lt;div class="cancelBtn" id="cancelBtn"&gt;
+				&lt;div class="btnContainer" id="cancelBtn"&gt;
+					&lt;img class="cancelImage" id="cancelBtnImage" src="cancel" /&gt;
+					&lt;div class="cancelBtnText" id="cancelBtnText"&gt;Cancel&lt;/div&gt;					
+				&lt;/div&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;</value>
+  </data>
+</root>

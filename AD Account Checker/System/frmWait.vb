@@ -1,22 +1,29 @@
 ﻿Imports ProcessBank.Agent
 
-
 Public Class frmWait
-#Region "Singleton"
-    Private Shared ReadOnly instance As New frmWait() ' + единственный приватный конструктор!
-    Public Shared ReadOnly Property Current As frmWait
-        Get
-            Return instance
-        End Get
-    End Property
-
-    Private Sub New()
+    Sub New()
         InitializeComponent()
         Me.pp.AutoHeight = True
     End Sub
-#End Region
 
-    Private Shared description As String
+    Public Overrides Sub SetCaption(ByVal caption As String)
+        MyBase.SetCaption(caption)
+        Me.pp.Caption = caption
+    End Sub
+
+    Public Overrides Sub SetDescription(ByVal description As String)
+        MyBase.SetDescription(description)
+        Me.pp.Description = description
+        Application.DoEvents()
+    End Sub
+
+    Public Overrides Sub ProcessCommand(ByVal cmd As System.Enum, ByVal arg As Object)
+        MyBase.ProcessCommand(cmd, arg)
+    End Sub
+
+    Public Enum WaitFormCommand
+        SomeCommandId
+    End Enum
 
     ''' <summary>
     ''' Главный метод для отображения формы в модальном режиме.
@@ -31,16 +38,15 @@ Public Class frmWait
         <System.Runtime.CompilerServices.CallerMemberName> Optional caller As String = "NA")
 
         Log.Write(Log.Level.Info, $"Caller: {caller}, Message: {caption} | {description}", $"{NameOf(frmWait)}.{NameOf(ShowOnPeak)}")
-        If owner Is Nothing Then owner = frmMain
 
         Try
             ' Иногда DX падает при попытке AutoWidth
-            Current.pp.Caption = caption
-            Current.pp.Description = description
+            frmWait.pp.Caption = caption
+            frmWait.pp.Description = description
         Catch ex As Exception
 
         End Try
-        If Not Current.Visible Then Current.Show(owner)
+        If Not frmWait.Visible Then frmWait.Show(owner)
         InvokeSetTag(caption)
         Application.DoEvents()
     End Sub
@@ -55,19 +61,9 @@ Public Class frmWait
         <System.Runtime.CompilerServices.CallerMemberName> Optional caller As String = "NA")
 
         Log.Write(Log.Level.Info, $"Caller: {caller}, Message: {caption} | {description}", $"{NameOf(frmWait)}.{NameOf(ShowOnPeak)}")
-        Current.pp.Caption = caption
-        Current.pp.Description = description
-        If Not Current.Visible Then Current.Show()
-        Application.DoEvents()
-    End Sub
-
-    ''' <summary>
-    ''' Установить описание хода процесса.
-    ''' </summary>
-    ''' <param name="description"></param>
-    Private Sub SetDescription()
-        Log.Write(Log.Level.Info, description, $"{NameOf(frmWait)}.{NameOf(SetDescription)}")
-        Current.pp.Description = description
+        frmWait.pp.Caption = caption
+        frmWait.pp.Description = description
+        If Not frmWait.Visible Then frmWait.Show()
         Application.DoEvents()
     End Sub
 
@@ -76,11 +72,10 @@ Public Class frmWait
     ''' </summary>
     ''' <param name="description"></param>
     Public Shared Sub InvokeSetDescription(description As String)
-        frmWait.description = description
-        If frmWait.Current.InvokeRequired Then ' Определить поток
-            frmWait.Current?.Invoke(New MethodInvoker(AddressOf frmWait.Current.SetDescription))
+        If frmWait.InvokeRequired Then ' Определить поток
+            frmWait?.Invoke(New MethodInvoker(Sub() frmWait.SetDescription(description)))
         Else
-            frmWait.Current?.SetDescription()
+            frmWait?.SetDescription(description)
         End If
     End Sub
 
@@ -88,10 +83,10 @@ Public Class frmWait
     ''' Потокобезопасный вызов
     ''' </summary>
     Public Shared Sub InvokeHide()
-        If frmWait.Current.InvokeRequired Then ' Определить поток
-            frmWait.Current?.Invoke(New MethodInvoker(AddressOf frmWait.Current.Hide))
+        If frmWait.InvokeRequired Then ' Определить поток
+            frmWait?.Invoke(New MethodInvoker(AddressOf frmWait.Hide))
         Else
-            frmWait.Current.Hide()
+            frmWait.Hide()
         End If
     End Sub
 
@@ -107,10 +102,10 @@ Public Class frmWait
     ''' Потокобезопасный вызов
     ''' </summary>
     Public Shared Function InvokeGetTag() As Object
-        If frmWait.Current.InvokeRequired Then ' Определить поток
-            Return frmWait.Current?.Invoke(New MethodInvoker(Sub() frmWait.Current.GetTag()))
+        If frmWait.InvokeRequired Then ' Определить поток
+            Return frmWait?.Invoke(New MethodInvoker(Sub() frmWait.GetTag()))
         Else
-            Return frmWait.Current.GetTag()
+            Return frmWait.GetTag()
         End If
     End Function
 
@@ -118,14 +113,10 @@ Public Class frmWait
     ''' Потокобезопасный вызов
     ''' </summary>
     Public Shared Sub InvokeSetTag(tag As Object)
-        If frmWait.Current.InvokeRequired Then ' Определить поток
-            frmWait.Current?.Invoke(New MethodInvoker(Sub() frmWait.Current.SetTag(tag)))
+        If frmWait.InvokeRequired Then ' Определить поток
+            frmWait?.Invoke(New MethodInvoker(Sub() frmWait.SetTag(tag)))
         Else
-            frmWait.Current.SetTag(tag)
+            frmWait.SetTag(tag)
         End If
     End Sub
-
-    Protected Overrides Sub Finalize()
-		MyBase.Finalize()
-	End Sub
 End Class
