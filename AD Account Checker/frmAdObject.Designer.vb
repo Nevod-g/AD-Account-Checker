@@ -39,7 +39,7 @@ Partial Class frmAdObject
         Me.PanelControl1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.PanelControl1.Location = New System.Drawing.Point(0, 221)
         Me.PanelControl1.Name = "PanelControl1"
-        Me.PanelControl1.Size = New System.Drawing.Size(594, 29)
+        Me.PanelControl1.Size = New System.Drawing.Size(690, 29)
         Me.PanelControl1.TabIndex = 4
         '
         'meInfo
@@ -48,7 +48,7 @@ Partial Class frmAdObject
         Me.meInfo.Location = New System.Drawing.Point(0, 0)
         Me.meInfo.Name = "meInfo"
         Me.meInfo.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.meInfo.Size = New System.Drawing.Size(594, 221)
+        Me.meInfo.Size = New System.Drawing.Size(690, 221)
         Me.meInfo.TabIndex = 0
         '
         'sbGetPropertyValue
@@ -69,7 +69,7 @@ Partial Class frmAdObject
         Me.tePropertyValue.Name = "tePropertyValue"
         Me.tePropertyValue.Properties.NullText = "NA"
         Me.tePropertyValue.Properties.ReadOnly = True
-        Me.tePropertyValue.Size = New System.Drawing.Size(279, 20)
+        Me.tePropertyValue.Size = New System.Drawing.Size(375, 20)
         Me.tePropertyValue.TabIndex = 2
         '
         'tePropertyName
@@ -84,7 +84,7 @@ Partial Class frmAdObject
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(594, 250)
+        Me.ClientSize = New System.Drawing.Size(690, 250)
         Me.Controls.Add(Me.meInfo)
         Me.Controls.Add(Me.PanelControl1)
         Me.IconOptions.Image = Global.Adac.My.Resources.Resources.new_16x16

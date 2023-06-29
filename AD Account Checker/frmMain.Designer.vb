@@ -34,26 +34,30 @@ Partial Class frmMain
         Me.ToolTipController = New DevExpress.Utils.ToolTipController(Me.components)
         Me.gvUserAccounts = New DevExpress.XtraGrid.Views.BandedGrid.AdvBandedGridView()
         Me.gbId = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
-        Me.bgcHrNumber = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.bgcImportNumber = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcEmployeeId = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
-        Me.bgcEnabled = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.gbName = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
-        Me.bgcHrName = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.bgcImportGivenName = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcGivenName = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.gbSurname = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
-        Me.bgcHrSurname = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.bgcImportSurname = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcSurname = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.gbTitle = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
+        Me.bgcImportFunction = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.bgcTitle = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.gbDepartment = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
-        Me.bgcHrDepartment = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.bgcImportDepartment = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcDepartment = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.gbOther = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
-        Me.bgcHrFunction = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
-        Me.bgcHrDateOfEntry = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.bgcImportDateOfEntry = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.RepositoryItemDateTimeEdit = New DevExpress.XtraEditors.Repository.RepositoryItemDateEdit()
+        Me.bgcImportDateOfTermination = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.bgcEnabled = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.bgcCompared = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcCompany = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
-        Me.bgcHrDateOfTermination = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.gbDetail = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
         Me.bgcSamAccountName = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
-        Me.bgcLastLogonDate = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.bgcLastLogon = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcAccountExpirationDate = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcDistinguishedName = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcExcelFileName = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
@@ -64,6 +68,7 @@ Partial Class frmMain
         Me.bbiImport = New DevExpress.XtraBars.BarButtonItem()
         Me.bbiImportExcel = New DevExpress.XtraBars.BarButtonItem()
         Me.bbiCompareAccounts = New DevExpress.XtraBars.BarButtonItem()
+        Me.bbiDebug = New DevExpress.XtraBars.BarButtonItem()
         Me.acAdEntries = New DevExpress.XtraBars.Navigation.AccordionControl()
         Me.aceDomainControllers = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.FluentDesignFormControl1 = New DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl()
@@ -71,6 +76,8 @@ Partial Class frmMain
         CType(Me.gcUserAccounts, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cmsOnRow.SuspendLayout()
         CType(Me.gvUserAccounts, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RepositoryItemDateTimeEdit, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RepositoryItemDateTimeEdit.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.FluentFormDefaultManager, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.acAdEntries, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.FluentDesignFormControl1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -97,6 +104,7 @@ Partial Class frmMain
         Me.gcUserAccounts.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.gcUserAccounts.MenuManager = Me.FluentFormDefaultManager
         Me.gcUserAccounts.Name = "gcUserAccounts"
+        Me.gcUserAccounts.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.RepositoryItemDateTimeEdit})
         Me.gcUserAccounts.Size = New System.Drawing.Size(1120, 770)
         Me.gcUserAccounts.TabIndex = 0
         Me.gcUserAccounts.ToolTipController = Me.ToolTipController
@@ -107,32 +115,32 @@ Partial Class frmMain
         '
         Me.cmsOnRow.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsmiEntryInformation, Me.ToolStripSeparator1, Me.tsmiDeleteRows, Me.tsmiClearAll})
         Me.cmsOnRow.Name = "cmsOnRow"
-        Me.cmsOnRow.Size = New System.Drawing.Size(181, 98)
+        Me.cmsOnRow.Size = New System.Drawing.Size(168, 76)
         '
         'tsmiEntryInformation
         '
         Me.tsmiEntryInformation.Image = Global.Adac.My.Resources.Resources.info_16x16
         Me.tsmiEntryInformation.Name = "tsmiEntryInformation"
-        Me.tsmiEntryInformation.Size = New System.Drawing.Size(180, 22)
+        Me.tsmiEntryInformation.Size = New System.Drawing.Size(167, 22)
         Me.tsmiEntryInformation.Text = "Entry Information"
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(177, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(164, 6)
         '
         'tsmiDeleteRows
         '
         Me.tsmiDeleteRows.Image = Global.Adac.My.Resources.Resources.deleterows_16x16
         Me.tsmiDeleteRows.Name = "tsmiDeleteRows"
-        Me.tsmiDeleteRows.Size = New System.Drawing.Size(180, 22)
+        Me.tsmiDeleteRows.Size = New System.Drawing.Size(167, 22)
         Me.tsmiDeleteRows.Text = "Delete Row"
         '
         'tsmiClearAll
         '
         Me.tsmiClearAll.Image = Global.Adac.My.Resources.Resources.clear_16x16
         Me.tsmiClearAll.Name = "tsmiClearAll"
-        Me.tsmiClearAll.Size = New System.Drawing.Size(180, 22)
+        Me.tsmiClearAll.Size = New System.Drawing.Size(167, 22)
         Me.tsmiClearAll.Text = "Clear All"
         '
         'ToolTipController
@@ -141,8 +149,8 @@ Partial Class frmMain
         '
         'gvUserAccounts
         '
-        Me.gvUserAccounts.Bands.AddRange(New DevExpress.XtraGrid.Views.BandedGrid.GridBand() {Me.gbId, Me.gbName, Me.gbSurname, Me.gbDepartment, Me.gbOther, Me.gbDetail})
-        Me.gvUserAccounts.Columns.AddRange(New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn() {Me.bgcEmployeeId, Me.bgcGivenName, Me.bgcSurname, Me.bgcDepartment, Me.bgcCompany, Me.bgcSamAccountName, Me.bgcAccountExpirationDate, Me.bgcDistinguishedName, Me.bgcLastLogonDate, Me.bgcEnabled, Me.bgcHrNumber, Me.bgcHrName, Me.bgcHrSurname, Me.bgcHrFunction, Me.bgcHrDateOfEntry, Me.bgcHrDateOfTermination, Me.bgcHrDepartment, Me.bgcExcelFileName, Me.bgcExcelSheetName, Me.bgcExcelRowNumber})
+        Me.gvUserAccounts.Bands.AddRange(New DevExpress.XtraGrid.Views.BandedGrid.GridBand() {Me.gbId, Me.gbName, Me.gbSurname, Me.gbTitle, Me.gbDepartment, Me.gbOther, Me.gbDetail})
+        Me.gvUserAccounts.Columns.AddRange(New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn() {Me.bgcEmployeeId, Me.bgcGivenName, Me.bgcSurname, Me.bgcDepartment, Me.bgcCompany, Me.bgcSamAccountName, Me.bgcAccountExpirationDate, Me.bgcDistinguishedName, Me.bgcLastLogon, Me.bgcEnabled, Me.bgcImportNumber, Me.bgcImportGivenName, Me.bgcImportSurname, Me.bgcImportFunction, Me.bgcImportDateOfEntry, Me.bgcImportDateOfTermination, Me.bgcImportDepartment, Me.bgcExcelFileName, Me.bgcExcelSheetName, Me.bgcExcelRowNumber, Me.bgcTitle, Me.bgcCompared})
         Me.gvUserAccounts.DetailHeight = 284
         Me.gvUserAccounts.GridControl = Me.gcUserAccounts
         Me.gvUserAccounts.GroupCount = 2
@@ -176,21 +184,21 @@ Partial Class frmMain
         'gbId
         '
         Me.gbId.Caption = "ID"
-        Me.gbId.Columns.Add(Me.bgcHrNumber)
+        Me.gbId.Columns.Add(Me.bgcImportNumber)
         Me.gbId.Columns.Add(Me.bgcEmployeeId)
-        Me.gbId.Columns.Add(Me.bgcEnabled)
         Me.gbId.Name = "gbId"
         Me.gbId.OptionsBand.AllowMove = False
         Me.gbId.VisibleIndex = 0
-        Me.gbId.Width = 76
+        Me.gbId.Width = 82
         '
-        'bgcHrNumber
+        'bgcImportNumber
         '
-        Me.bgcHrNumber.Caption = "HR Pers. Nr."
-        Me.bgcHrNumber.FieldName = "HrNumber"
-        Me.bgcHrNumber.Name = "bgcHrNumber"
-        Me.bgcHrNumber.Visible = True
-        Me.bgcHrNumber.Width = 76
+        Me.bgcImportNumber.Caption = "↓ Employee ID"
+        Me.bgcImportNumber.FieldName = "ImportNumber"
+        Me.bgcImportNumber.Name = "bgcImportNumber"
+        Me.bgcImportNumber.ToolTip = "Pers. Nr./Employee ID"
+        Me.bgcImportNumber.Visible = True
+        Me.bgcImportNumber.Width = 82
         '
         'bgcEmployeeId
         '
@@ -200,31 +208,25 @@ Partial Class frmMain
         Me.bgcEmployeeId.Name = "bgcEmployeeId"
         Me.bgcEmployeeId.RowIndex = 1
         Me.bgcEmployeeId.Visible = True
-        Me.bgcEmployeeId.Width = 76
-        '
-        'bgcEnabled
-        '
-        Me.bgcEnabled.FieldName = "Enabled"
-        Me.bgcEnabled.Name = "bgcEnabled"
-        Me.bgcEnabled.RowIndex = 1
+        Me.bgcEmployeeId.Width = 82
         '
         'gbName
         '
         Me.gbName.Caption = "Name"
-        Me.gbName.Columns.Add(Me.bgcHrName)
+        Me.gbName.Columns.Add(Me.bgcImportGivenName)
         Me.gbName.Columns.Add(Me.bgcGivenName)
         Me.gbName.Name = "gbName"
         Me.gbName.OptionsBand.AllowMove = False
         Me.gbName.VisibleIndex = 1
         Me.gbName.Width = 99
         '
-        'bgcHrName
+        'bgcImportGivenName
         '
-        Me.bgcHrName.Caption = "HR Name"
-        Me.bgcHrName.FieldName = "HrName"
-        Me.bgcHrName.Name = "bgcHrName"
-        Me.bgcHrName.Visible = True
-        Me.bgcHrName.Width = 99
+        Me.bgcImportGivenName.Caption = "↓ Given Name"
+        Me.bgcImportGivenName.FieldName = "ImportGivenName"
+        Me.bgcImportGivenName.Name = "bgcImportGivenName"
+        Me.bgcImportGivenName.Visible = True
+        Me.bgcImportGivenName.Width = 99
         '
         'bgcGivenName
         '
@@ -237,20 +239,20 @@ Partial Class frmMain
         'gbSurname
         '
         Me.gbSurname.Caption = "Surname"
-        Me.gbSurname.Columns.Add(Me.bgcHrSurname)
+        Me.gbSurname.Columns.Add(Me.bgcImportSurname)
         Me.gbSurname.Columns.Add(Me.bgcSurname)
         Me.gbSurname.Name = "gbSurname"
         Me.gbSurname.OptionsBand.AllowMove = False
         Me.gbSurname.VisibleIndex = 2
         Me.gbSurname.Width = 117
         '
-        'bgcHrSurname
+        'bgcImportSurname
         '
-        Me.bgcHrSurname.Caption = "HR Surname"
-        Me.bgcHrSurname.FieldName = "HrSurname"
-        Me.bgcHrSurname.Name = "bgcHrSurname"
-        Me.bgcHrSurname.Visible = True
-        Me.bgcHrSurname.Width = 117
+        Me.bgcImportSurname.Caption = "↓ Surname"
+        Me.bgcImportSurname.FieldName = "ImportSurname"
+        Me.bgcImportSurname.Name = "bgcImportSurname"
+        Me.bgcImportSurname.Visible = True
+        Me.bgcImportSurname.Width = 117
         '
         'bgcSurname
         '
@@ -260,22 +262,49 @@ Partial Class frmMain
         Me.bgcSurname.Visible = True
         Me.bgcSurname.Width = 117
         '
+        'gbTitle
+        '
+        Me.gbTitle.Caption = "Title"
+        Me.gbTitle.Columns.Add(Me.bgcImportFunction)
+        Me.gbTitle.Columns.Add(Me.bgcTitle)
+        Me.gbTitle.Name = "gbTitle"
+        Me.gbTitle.Visible = False
+        Me.gbTitle.VisibleIndex = -1
+        Me.gbTitle.Width = 110
+        '
+        'bgcImportFunction
+        '
+        Me.bgcImportFunction.Caption = "↓ Function"
+        Me.bgcImportFunction.FieldName = "ImportFunction"
+        Me.bgcImportFunction.Name = "bgcImportFunction"
+        Me.bgcImportFunction.Visible = True
+        Me.bgcImportFunction.Width = 110
+        '
+        'bgcTitle
+        '
+        Me.bgcTitle.FieldName = "Title"
+        Me.bgcTitle.Name = "bgcTitle"
+        Me.bgcTitle.RowIndex = 1
+        Me.bgcTitle.Visible = True
+        Me.bgcTitle.Width = 110
+        '
         'gbDepartment
         '
         Me.gbDepartment.Caption = "Department"
-        Me.gbDepartment.Columns.Add(Me.bgcHrDepartment)
+        Me.gbDepartment.Columns.Add(Me.bgcImportDepartment)
         Me.gbDepartment.Columns.Add(Me.bgcDepartment)
         Me.gbDepartment.Name = "gbDepartment"
         Me.gbDepartment.VisibleIndex = 3
         Me.gbDepartment.Width = 127
         '
-        'bgcHrDepartment
+        'bgcImportDepartment
         '
-        Me.bgcHrDepartment.Caption = "HR Department"
-        Me.bgcHrDepartment.FieldName = "HrDepartment"
-        Me.bgcHrDepartment.Name = "bgcHrDepartment"
-        Me.bgcHrDepartment.Visible = True
-        Me.bgcHrDepartment.Width = 127
+        Me.bgcImportDepartment.Caption = "↓ Department"
+        Me.bgcImportDepartment.FieldName = "ImportDepartment"
+        Me.bgcImportDepartment.Name = "bgcImportDepartment"
+        Me.bgcImportDepartment.ToolTip = "↓"
+        Me.bgcImportDepartment.Visible = True
+        Me.bgcImportDepartment.Width = 127
         '
         'bgcDepartment
         '
@@ -288,29 +317,58 @@ Partial Class frmMain
         'gbOther
         '
         Me.gbOther.Caption = "Other"
-        Me.gbOther.Columns.Add(Me.bgcHrFunction)
-        Me.gbOther.Columns.Add(Me.bgcHrDateOfEntry)
+        Me.gbOther.Columns.Add(Me.bgcImportDateOfEntry)
+        Me.gbOther.Columns.Add(Me.bgcImportDateOfTermination)
+        Me.gbOther.Columns.Add(Me.bgcEnabled)
+        Me.gbOther.Columns.Add(Me.bgcCompared)
         Me.gbOther.Columns.Add(Me.bgcCompany)
-        Me.gbOther.Columns.Add(Me.bgcHrDateOfTermination)
         Me.gbOther.Name = "gbOther"
         Me.gbOther.VisibleIndex = 4
-        Me.gbOther.Width = 240
+        Me.gbOther.Width = 331
         '
-        'bgcHrFunction
+        'bgcImportDateOfEntry
         '
-        Me.bgcHrFunction.Caption = "HR Function"
-        Me.bgcHrFunction.FieldName = "HrFunction"
-        Me.bgcHrFunction.Name = "bgcHrFunction"
-        Me.bgcHrFunction.Visible = True
-        Me.bgcHrFunction.Width = 107
+        Me.bgcImportDateOfEntry.Caption = "↓ Date of Entry"
+        Me.bgcImportDateOfEntry.ColumnEdit = Me.RepositoryItemDateTimeEdit
+        Me.bgcImportDateOfEntry.FieldName = "ImportDateOfEntry"
+        Me.bgcImportDateOfEntry.Name = "bgcImportDateOfEntry"
+        Me.bgcImportDateOfEntry.Visible = True
+        Me.bgcImportDateOfEntry.Width = 125
         '
-        'bgcHrDateOfEntry
+        'RepositoryItemDateTimeEdit
         '
-        Me.bgcHrDateOfEntry.Caption = "HR Date of Entry"
-        Me.bgcHrDateOfEntry.FieldName = "HrDateOfEntry"
-        Me.bgcHrDateOfEntry.Name = "bgcHrDateOfEntry"
-        Me.bgcHrDateOfEntry.Visible = True
-        Me.bgcHrDateOfEntry.Width = 133
+        Me.RepositoryItemDateTimeEdit.AutoHeight = False
+        Me.RepositoryItemDateTimeEdit.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.RepositoryItemDateTimeEdit.CalendarTimeProperties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.RepositoryItemDateTimeEdit.Name = "RepositoryItemDateTimeEdit"
+        '
+        'bgcImportDateOfTermination
+        '
+        Me.bgcImportDateOfTermination.Caption = "↓ Date of Termination"
+        Me.bgcImportDateOfTermination.ColumnEdit = Me.RepositoryItemDateTimeEdit
+        Me.bgcImportDateOfTermination.FieldName = "ImportDateOfTermination"
+        Me.bgcImportDateOfTermination.Name = "bgcImportDateOfTermination"
+        Me.bgcImportDateOfTermination.ToolTip = "↓"
+        Me.bgcImportDateOfTermination.Visible = True
+        Me.bgcImportDateOfTermination.Width = 206
+        '
+        'bgcEnabled
+        '
+        Me.bgcEnabled.FieldName = "Enabled"
+        Me.bgcEnabled.Name = "bgcEnabled"
+        Me.bgcEnabled.RowIndex = 1
+        Me.bgcEnabled.ToolTip = "AD Property: userAccountControl"
+        Me.bgcEnabled.Visible = True
+        Me.bgcEnabled.Width = 60
+        '
+        'bgcCompared
+        '
+        Me.bgcCompared.FieldName = "Compared"
+        Me.bgcCompared.Name = "bgcCompared"
+        Me.bgcCompared.RowIndex = 1
+        Me.bgcCompared.ToolTip = "HR and AD enrties has been compared."
+        Me.bgcCompared.Visible = True
+        Me.bgcCompared.Width = 65
         '
         'bgcCompany
         '
@@ -318,27 +376,18 @@ Partial Class frmMain
         Me.bgcCompany.Name = "bgcCompany"
         Me.bgcCompany.RowIndex = 1
         Me.bgcCompany.Visible = True
-        Me.bgcCompany.Width = 107
-        '
-        'bgcHrDateOfTermination
-        '
-        Me.bgcHrDateOfTermination.Caption = "HR Date of Termination"
-        Me.bgcHrDateOfTermination.FieldName = "HrDateOfTermination"
-        Me.bgcHrDateOfTermination.Name = "bgcHrDateOfTermination"
-        Me.bgcHrDateOfTermination.RowIndex = 1
-        Me.bgcHrDateOfTermination.Visible = True
-        Me.bgcHrDateOfTermination.Width = 133
+        Me.bgcCompany.Width = 206
         '
         'gbDetail
         '
         Me.gbDetail.Caption = "Detail"
         Me.gbDetail.Columns.Add(Me.bgcSamAccountName)
-        Me.gbDetail.Columns.Add(Me.bgcLastLogonDate)
+        Me.gbDetail.Columns.Add(Me.bgcLastLogon)
         Me.gbDetail.Columns.Add(Me.bgcAccountExpirationDate)
         Me.gbDetail.Columns.Add(Me.bgcDistinguishedName)
         Me.gbDetail.Name = "gbDetail"
         Me.gbDetail.VisibleIndex = 5
-        Me.gbDetail.Width = 365
+        Me.gbDetail.Width = 374
         '
         'bgcSamAccountName
         '
@@ -347,23 +396,26 @@ Partial Class frmMain
         Me.bgcSamAccountName.MinWidth = 21
         Me.bgcSamAccountName.Name = "bgcSamAccountName"
         Me.bgcSamAccountName.Visible = True
-        Me.bgcSamAccountName.Width = 99
+        Me.bgcSamAccountName.Width = 101
         '
-        'bgcLastLogonDate
+        'bgcLastLogon
         '
-        Me.bgcLastLogonDate.FieldName = "LastLogonDate"
-        Me.bgcLastLogonDate.Name = "bgcLastLogonDate"
-        Me.bgcLastLogonDate.Visible = True
-        Me.bgcLastLogonDate.Width = 133
+        Me.bgcLastLogon.ColumnEdit = Me.RepositoryItemDateTimeEdit
+        Me.bgcLastLogon.FieldName = "LastLogon"
+        Me.bgcLastLogon.Name = "bgcLastLogon"
+        Me.bgcLastLogon.ToolTip = "AD Property: lastLogonTimestamp"
+        Me.bgcLastLogon.Visible = True
+        Me.bgcLastLogon.Width = 136
         '
         'bgcAccountExpirationDate
         '
         Me.bgcAccountExpirationDate.Caption = "Expiration Date"
+        Me.bgcAccountExpirationDate.ColumnEdit = Me.RepositoryItemDateTimeEdit
         Me.bgcAccountExpirationDate.FieldName = "AccountExpirationDate"
         Me.bgcAccountExpirationDate.Name = "bgcAccountExpirationDate"
-        Me.bgcAccountExpirationDate.ToolTip = "Account Expiration Date"
+        Me.bgcAccountExpirationDate.ToolTip = "AD Property: accountExpires"
         Me.bgcAccountExpirationDate.Visible = True
-        Me.bgcAccountExpirationDate.Width = 133
+        Me.bgcAccountExpirationDate.Width = 137
         '
         'bgcDistinguishedName
         '
@@ -371,7 +423,7 @@ Partial Class frmMain
         Me.bgcDistinguishedName.Name = "bgcDistinguishedName"
         Me.bgcDistinguishedName.RowIndex = 1
         Me.bgcDistinguishedName.Visible = True
-        Me.bgcDistinguishedName.Width = 365
+        Me.bgcDistinguishedName.Width = 374
         '
         'bgcExcelFileName
         '
@@ -392,13 +444,13 @@ Partial Class frmMain
         Me.bgcExcelRowNumber.Caption = "#"
         Me.bgcExcelRowNumber.FieldName = "ExcelRowNumber"
         Me.bgcExcelRowNumber.Name = "bgcExcelRowNumber"
-        Me.bgcExcelRowNumber.ToolTip = "Data Set Row Number"
+        Me.bgcExcelRowNumber.ToolTip = "Excel data set Row Number"
         '
         'FluentFormDefaultManager
         '
         Me.FluentFormDefaultManager.Form = Me
-        Me.FluentFormDefaultManager.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.bbiCompare, Me.bbiImport, Me.bbiImportExcel, Me.bbiCompareAccounts})
-        Me.FluentFormDefaultManager.MaxItemId = 6
+        Me.FluentFormDefaultManager.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.bbiCompare, Me.bbiImport, Me.bbiImportExcel, Me.bbiCompareAccounts, Me.bbiDebug})
+        Me.FluentFormDefaultManager.MaxItemId = 7
         '
         'bbiCompare
         '
@@ -423,13 +475,23 @@ Partial Class frmMain
         '
         'bbiCompareAccounts
         '
-        Me.bbiCompareAccounts.Caption = "Compare Accounts"
+        Me.bbiCompareAccounts.Caption = "Compare Entries"
         Me.bbiCompareAccounts.Id = 3
         Me.bbiCompareAccounts.ImageOptions.SvgImage = Global.Adac.My.Resources.Resources.productquickcomparisons
         Me.bbiCompareAccounts.Name = "bbiCompareAccounts"
         '
+        'bbiDebug
+        '
+        Me.bbiDebug.Caption = "Debug"
+        Me.bbiDebug.Id = 6
+        Me.bbiDebug.ImageOptions.Image = Global.Adac.My.Resources.Resources.question_16x16
+        Me.bbiDebug.ImageOptions.LargeImage = Global.Adac.My.Resources.Resources.question_32x32
+        Me.bbiDebug.Name = "bbiDebug"
+        Me.bbiDebug.Visibility = DevExpress.XtraBars.BarItemVisibility.Never
+        '
         'acAdEntries
         '
+        Me.acAdEntries.AllowItemSelection = True
         Me.acAdEntries.Dock = System.Windows.Forms.DockStyle.Left
         Me.acAdEntries.Elements.AddRange(New DevExpress.XtraBars.Navigation.AccordionControlElement() {Me.aceDomainControllers})
         Me.acAdEntries.ExpandElementMode = DevExpress.XtraBars.Navigation.ExpandElementMode.Multiple
@@ -438,6 +500,7 @@ Partial Class frmMain
         Me.acAdEntries.Name = "acAdEntries"
         Me.acAdEntries.ResizeMode = DevExpress.XtraBars.Navigation.AccordionControlResizeMode.InnerResizeZone
         Me.acAdEntries.ScrollBarMode = DevExpress.XtraBars.Navigation.ScrollBarMode.Fluent
+        Me.acAdEntries.SelectElementMode = DevExpress.XtraBars.Navigation.SelectElementMode.MouseDown
         Me.acAdEntries.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always
         Me.acAdEntries.Size = New System.Drawing.Size(280, 770)
         Me.acAdEntries.TabIndex = 1
@@ -464,7 +527,7 @@ Partial Class frmMain
         'FluentDesignFormControl1
         '
         Me.FluentDesignFormControl1.FluentDesignForm = Me
-        Me.FluentDesignFormControl1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.bbiCompare, Me.bbiImport, Me.bbiImportExcel, Me.bbiCompareAccounts})
+        Me.FluentDesignFormControl1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.bbiCompare, Me.bbiImport, Me.bbiImportExcel, Me.bbiCompareAccounts, Me.bbiDebug})
         Me.FluentDesignFormControl1.Location = New System.Drawing.Point(0, 0)
         Me.FluentDesignFormControl1.Manager = Me.FluentFormDefaultManager
         Me.FluentDesignFormControl1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
@@ -474,6 +537,7 @@ Partial Class frmMain
         Me.FluentDesignFormControl1.TabStop = False
         Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiImportExcel)
         Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiCompareAccounts)
+        Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiDebug)
         '
         'frmMain
         '
@@ -496,6 +560,8 @@ Partial Class frmMain
         CType(Me.gcUserAccounts, System.ComponentModel.ISupportInitialize).EndInit()
         Me.cmsOnRow.ResumeLayout(False)
         CType(Me.gvUserAccounts, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RepositoryItemDateTimeEdit.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RepositoryItemDateTimeEdit, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.FluentFormDefaultManager, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.acAdEntries, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.FluentDesignFormControl1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -521,22 +587,16 @@ Partial Class frmMain
     Friend WithEvents bgcCompany As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
     Friend WithEvents bgcAccountExpirationDate As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
     Friend WithEvents bgcDistinguishedName As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents bgcLastLogonDate As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+    Friend WithEvents bgcLastLogon As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
     Friend WithEvents bgcEnabled As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents bgcHrNumber As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents bgcHrName As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents bgcHrSurname As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents bgcHrFunction As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents bgcHrDateOfEntry As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents bgcHrDateOfTermination As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents bgcHrDepartment As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+    Friend WithEvents bgcImportNumber As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+    Friend WithEvents bgcImportGivenName As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+    Friend WithEvents bgcImportSurname As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+    Friend WithEvents bgcImportFunction As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+    Friend WithEvents bgcImportDateOfEntry As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+    Friend WithEvents bgcImportDateOfTermination As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+    Friend WithEvents bgcImportDepartment As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
     Friend WithEvents bgcGivenName As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
-    Friend WithEvents gbId As DevExpress.XtraGrid.Views.BandedGrid.GridBand
-    Friend WithEvents gbName As DevExpress.XtraGrid.Views.BandedGrid.GridBand
-    Friend WithEvents gbSurname As DevExpress.XtraGrid.Views.BandedGrid.GridBand
-    Friend WithEvents gbDepartment As DevExpress.XtraGrid.Views.BandedGrid.GridBand
-    Friend WithEvents gbOther As DevExpress.XtraGrid.Views.BandedGrid.GridBand
-    Friend WithEvents gbDetail As DevExpress.XtraGrid.Views.BandedGrid.GridBand
     Friend WithEvents bgcExcelFileName As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
     Friend WithEvents bgcExcelSheetName As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
     Friend WithEvents bgcExcelRowNumber As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
@@ -545,4 +605,15 @@ Partial Class frmMain
     Friend WithEvents tsmiClearAll As ToolStripMenuItem
     Friend WithEvents tsmiEntryInformation As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents bbiDebug As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents bgcTitle As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+    Friend WithEvents bgcCompared As DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn
+    Friend WithEvents gbId As DevExpress.XtraGrid.Views.BandedGrid.GridBand
+    Friend WithEvents gbName As DevExpress.XtraGrid.Views.BandedGrid.GridBand
+    Friend WithEvents gbSurname As DevExpress.XtraGrid.Views.BandedGrid.GridBand
+    Friend WithEvents gbTitle As DevExpress.XtraGrid.Views.BandedGrid.GridBand
+    Friend WithEvents gbDepartment As DevExpress.XtraGrid.Views.BandedGrid.GridBand
+    Friend WithEvents gbOther As DevExpress.XtraGrid.Views.BandedGrid.GridBand
+    Friend WithEvents gbDetail As DevExpress.XtraGrid.Views.BandedGrid.GridBand
+    Friend WithEvents RepositoryItemDateTimeEdit As DevExpress.XtraEditors.Repository.RepositoryItemDateEdit
 End Class

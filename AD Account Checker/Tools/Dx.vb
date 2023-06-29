@@ -39,20 +39,20 @@ Public NotInheritable Class Dx
 				Optional allowPixelScrolling As Boolean? = True,
 				Optional allowRowSizing As Boolean = True,
 				Optional selectorColore As KnownColor = KnownColor.ForestGreen)
-		gv.OptionsBehavior.AllowDeleteRows = DevExpress.Utils.DefaultBoolean.False ' Запретить удаление строк по Delete
+		gv.OptionsBehavior.AllowDeleteRows = DefaultBoolean.False ' Запретить удаление строк по Delete
 		'gv.OptionsSelection.MultiSelect = True
 		'gv.OptionsSelection.MultiSelectMode = GridMultiSelectMode.RowSelect
 		'gv.OptionsView.NewItemRowPosition = NewItemRowPosition.None
 		gv.OptionsCustomization.AllowRowSizing = allowRowSizing ' Разрешить изменять высоту строк
-		gv.OptionsView.ShowFooter = False ' Отключить ногу
+		'gv.OptionsView.ShowFooter = False ' Отключить ногу
 		gv.OptionsView.EnableAppearanceEvenRow = True ' Полосатость таблиц
-		gv.OptionsView.ShowGroupPanel = False ' Отключить панель группировки
+		'gv.OptionsView.ShowGroupPanel = False ' Отключить панель группировки
 		gv.OptionsBehavior.AllowPixelScrolling = CastDefaultBoolean(allowPixelScrolling)  ' Плавный скролл
 		gv.OptionsView.ShowViewCaption = False ' Скрыть заголовок
-		gv.OptionsBehavior.EditorShowMode = DevExpress.Utils.EditorShowMode.MouseDown ' Выделяет содержимое ячейки при получении фокуса
-		gv.OptionsView.ShowFilterPanelMode = DevExpress.XtraGrid.Views.Base.ShowFilterPanelMode.ShowAlways ' Показать конструктор фильтра
+		gv.OptionsBehavior.EditorShowMode = EditorShowMode.MouseDown ' Выделяет содержимое ячейки при получении фокуса
+		gv.OptionsView.ShowFilterPanelMode = Views.Base.ShowFilterPanelMode.ShowAlways ' Показать конструктор фильтра
 		gv.OptionsFind.AlwaysVisible = True
-		gv.OptionsView.AnimationType = DevExpress.XtraGrid.Views.Base.GridAnimationType.NeverAnimate ' Иначе при завершении работы падает исключение.
+		'gv.OptionsView.AnimationType = Views.Base.GridAnimationType.NeverAnimate ' Иначе при завершении работы падает исключение.
 		gv.OptionsMenu.ShowConditionalFormattingItem = True ' Показать меню форматирования
 
 		' Раскрасить селектор
@@ -76,7 +76,7 @@ Public NotInheritable Class Dx
 		gv.Appearance.HideSelectionRow.BackColor2 = Color.Transparent
 
 		' BestFitColumns выполняется синхронно, после установки источника данных.
-		AddHandler gv.DataSourceChanged, Sub() gv.BestFitColumns() ' Авто выравнивание ширины колонок.
+		'AddHandler gv.DataSourceChanged, Sub() gv.BestFitColumns() ' Авто выравнивание ширины колонок.
 	End Sub
 
 	''' <summary>
@@ -279,7 +279,7 @@ Public NotInheritable Class Dx
 	''' <param name="column"></param>
 	''' <param name="value"></param>
 	Public Shared Sub AddFormatRules(gv As GridView)
-		'Select Case ValToStr(gv.Tag)
+		Select Case ValToStr(gv.Tag)
 		'	Case User.DboCodeName
 		'		' Правило "Подсвечивать новичков зеленым"
 		'		Dim fcrv As New FormatConditionRuleValue With {.Condition = FormatCondition.Expression}
@@ -297,34 +297,33 @@ Public NotInheritable Class Dx
 		'		fcrv2.Appearance.ForeColor = System.Drawing.Color.Gray
 		'		AddFormatRule(gv, fcrv2, fieldName, NameOf(Role.OFF_ID))
 
-		'	Case News.DboCodeName
-		'		' Правило "Подсвечивать не прочитанные новости"
-		'		Dim fcrv As New FormatConditionRuleValue With {.Condition = FormatCondition.NotEqual}
-		'		Dim fieldName = NameOf(News.WasRead)
-		'		fcrv.Value1 = True
-		'		fcrv.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-		'		fcrv.Appearance.ForeColor = System.Drawing.Color.Black
-		'		fcrv.Appearance.BackColor = System.Drawing.Color.LightGreen
-		'		AddFormatRule(gv, fcrv, fieldName, NameOf(News.WasRead))
+			Case UserAccount.DboCodeName
+				' Правило "Подсвечивать не найденные в AD Accounts"
+				Dim fcrv As New FormatConditionRuleValue With {.Condition = FormatCondition.Equal}
+				Dim fieldName = NameOf(UserAccount.EmployeeId)
+				fcrv.Value1 = String.Empty
+				fcrv.Appearance.ForeColor = Color.Black
+				fcrv.Appearance.BackColor = Color.PaleVioletRed
+				AddFormatRule(gv, fcrv, fieldName, "Undefined Accounts")
 
-		'	Case SessionActive.DboCodeName
-		'		' Правило "Подсвечивать активные сессии"
-		'		Dim fcrv As New FormatConditionRuleValue With {.Condition = FormatCondition.Equal}
-		'		Dim fieldName = NameOf(SessionActive.Status)
-		'		fcrv.Value1 = "running"
-		'		fcrv.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-		'		fcrv.Appearance.ForeColor = System.Drawing.Color.Black
-		'		fcrv.Appearance.BackColor = System.Drawing.Color.LightGreen
-		'		AddFormatRule(gv, fcrv, fieldName, fcrv.Value1.ToString())
+				'	Case SessionActive.DboCodeName
+				'		' Правило "Подсвечивать активные сессии"
+				'		Dim fcrv As New FormatConditionRuleValue With {.Condition = FormatCondition.Equal}
+				'		Dim fieldName = NameOf(SessionActive.Status)
+				'		fcrv.Value1 = "running"
+				'		fcrv.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+				'		fcrv.Appearance.ForeColor = System.Drawing.Color.Black
+				'		fcrv.Appearance.BackColor = System.Drawing.Color.LightGreen
+				'		AddFormatRule(gv, fcrv, fieldName, fcrv.Value1.ToString())
 
-		'		' Правило "Подсвечивать спящие сессии"
-		'		Dim fcrv2 As New FormatConditionRuleValue With {.Condition = FormatCondition.Equal}
-		'		fcrv2.Value1 = "sleeping"
-		'		fcrv2.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
-		'		fcrv2.Appearance.ForeColor = System.Drawing.Color.DimGray
-		'		fcrv2.Appearance.BackColor = System.Drawing.Color.LightBlue
-		'		AddFormatRule(gv, fcrv2, fieldName, fcrv.Value1.ToString())
-		'End Select
+				'		' Правило "Подсвечивать спящие сессии"
+				'		Dim fcrv2 As New FormatConditionRuleValue With {.Condition = FormatCondition.Equal}
+				'		fcrv2.Value1 = "sleeping"
+				'		fcrv2.Appearance.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(204, Byte))
+				'		fcrv2.Appearance.ForeColor = System.Drawing.Color.DimGray
+				'		fcrv2.Appearance.BackColor = System.Drawing.Color.LightBlue
+				'		AddFormatRule(gv, fcrv2, fieldName, fcrv.Value1.ToString())
+		End Select
 	End Sub
 
 	''' <summary>

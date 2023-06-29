@@ -19,7 +19,7 @@ Public Class frmAddAdController
     Private Sub sbAdd_Click(sender As Object, e As EventArgs) Handles sbAdd.Click
         AdRepository.AdControllers.Add(AdController)
         DbXmlWizard.SaveList(AdRepository.AdControllers, Core.APP_DIR_PATH, AdController.DATA_FILE_NAME, Now)
-        frmMain.AddAdController(AdController) ' Добавить новую Клавишу-Сервер в акордеон
+        frmMain.AddAceAdController(AdController) ' Добавить новую Клавишу-Сервер в акордеон
         Me.Close()
     End Sub
 End Class

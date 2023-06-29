@@ -1,4 +1,5 @@
-﻿Imports ProcessBank.Xpo
+﻿Imports System.DirectoryServices
+Imports ProcessBank.Xpo
 
 ''' <summary>
 ''' Сервер - Контроллер домена.
@@ -18,4 +19,7 @@ Public Class AdController
     Public Property Name As String
 
     Public Property ServerAddress As String
+
+    Public Property RootEntry As DirectoryEntry
+
 End Class

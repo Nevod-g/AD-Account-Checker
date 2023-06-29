@@ -1,6 +1,7 @@
 ﻿Imports System.DirectoryServices
 Imports ProcessBank.Xpo
 Imports ProcessBank.Agent.Tools
+Imports System.Runtime.InteropServices
 
 Public Class AdObject
     Inherits DbMetaObject
@@ -11,8 +12,17 @@ Public Class AdObject
     Public Overloads Shared ReadOnly Property HasLocalCache As Boolean = False
     Public Sub New() : End Sub
 
+    Const ACCOUNTDISABLE = 2
+    Const NORMAL_ACCOUNT = 512
+
+    Const USER_ACCOUNT_CONTROL_PARAM_NAME = "userAccountControl"
+    Const USER_SURNAME_PARAM_NAME = "sn"
+    Const ACCOUNT_EXPIRES_PARAM_NAME = "accountExpires"
+    Const LAST_LOGON_PARAM_NAME = "lastLogonTimestamp"
+
     Public Sub New(entry As DirectoryEntry, Optional parent As AdObject = Nothing)
         Me.Parent = parent
+        Me.RootEntry = parent?.RootEntry
         Me.Entry = entry
         Me.Path = entry.Path
         Me.Name = IIf(Mid(ValToStr(entry.Name), 3, 1) = "=", Mid(entry.Name, 4), entry.Name).ToString()
@@ -28,11 +38,13 @@ Public Class AdObject
     End Sub
 
     Public Property Parent As AdObject
+    Public Property RootEntry As DirectoryEntry
     Public Property Entry As DirectoryEntry
     Public ReadOnly Property Children As New List(Of AdObject)
     Public Property Path As String
     Public Property Name As String
     Public Property ObjectClass As String
+    Public Property ObjectCategory As String
     Public Property ObjectGUID As String
 
     ''' <summary>
@@ -69,12 +81,13 @@ Public Class AdObject
     Public Property GivenName As String
     Public Property Surname As String
     Public Property Department As String
+    Public Property Title As String
     Public Property Company As String
     Public Property EmployeeId As String
-    Public Property Enabled As Boolean
+    Public Property Enabled As Boolean?
     Public Property AccountExpirationDate As Date?
     Public Property DistinguishedName As String
-    Public Property LastLogonDate As Date?
+    Public Property LastLogon As Date?
 #End Region
 
     Private IsLoadPropertiesData As Boolean
@@ -85,24 +98,31 @@ Public Class AdObject
     Public Sub LoadPropertiesData()
         If IsLoadPropertiesData Then Exit Sub
         SamAccountName = ValToStr(Entry.Properties(NameOf(SamAccountName)).Value)
+        ObjectCategory = ValToStr(Entry.Properties(NameOf(ObjectCategory)).Value)
         GivenName = ValToStr(Entry.Properties(NameOf(GivenName)).Value)
-        Surname = ValToStr(Entry.Properties(NameOf(Surname)).Value)
+        Surname = ValToStr(Entry.Properties(USER_SURNAME_PARAM_NAME).Value)
         Department = ValToStr(Entry.Properties(NameOf(Department)).Value)
+        Title = ValToStr(Entry.Properties(NameOf(Title)).Value)
         Company = ValToStr(Entry.Properties(NameOf(Company)).Value)
         EmployeeId = ValToStr(Entry.Properties(NameOf(EmployeeId)).Value)
-        Enabled = ValToBool(Entry.Properties(NameOf(Enabled)).Value)
-        Dim accountExpirationDateValue = Entry.Properties(NameOf(AccountExpirationDate)).Value
-        AccountExpirationDate = ValToDateN(Entry.Properties(NameOf(AccountExpirationDate)).Value)
-        DistinguishedName = ValToStr(Entry.Properties(NameOf(DistinguishedName)).Value)
-        LastLogonDate = ValToDateN(Entry.Properties(NameOf(LastLogonDate)).Value)
-        IsLoadPropertiesData = True
-        If AccountExpirationDate > New Date(2000, 1, 1) Or accountExpirationDateValue IsNot Nothing Then
-            Beep()
+
+        Dim userAccountControl = ValToIntN(Entry.Properties(USER_ACCOUNT_CONTROL_PARAM_NAME).Value)
+        Enabled = ValToBoolN(Entry.Properties(NameOf(Enabled)).Value)
+        If userAccountControl = NORMAL_ACCOUNT Then
+            Enabled = True
+        ElseIf userAccountControl = NORMAL_ACCOUNT + ACCOUNTDISABLE Then
+            Enabled = False
         End If
+
+        AccountExpirationDate = Ldap.ConvertToDate(Entry.Properties(ACCOUNT_EXPIRES_PARAM_NAME).Value)
+        DistinguishedName = ValToStr(Entry.Properties(NameOf(DistinguishedName)).Value)
+        LastLogon = Ldap.ConvertToDate(Entry.Properties(LAST_LOGON_PARAM_NAME).Value)
+
+        IsLoadPropertiesData = True
     End Sub
 
     Public Function GetPropertyValue(propertyName As String) As String
-        Return ValToStr(Entry.Properties(propertyName).Value)
+        Dim value = Entry.Properties(propertyName).Value
+        Return ValToStr(value)
     End Function
-
 End Class

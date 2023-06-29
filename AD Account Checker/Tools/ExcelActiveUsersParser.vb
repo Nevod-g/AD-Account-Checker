@@ -4,17 +4,22 @@ Imports System.Data.OleDb
 Imports System.Threading.Tasks
 
 
-Public Class ExcelActiveUsersParser
+Public NotInheritable Class ExcelActiveUsersParser
 	' Ключевыве наименования колонок в файле Excel, ECN - Excel Column Name
 	'! В нижнем регистре!
 	Private Const ECN_NUMBER = "pers.nr."
 	Private Const ECN_NUMBER_ALT1 = "nr."
 	Private Const ECN_NUMBER_ALT2 = "nr#"
 	Private Const ECN_NUMBER_ALT3 = "pers#nr#"
-	'Private Const ECN_NUMBER_ALT3 = "pers.nr."
+	Private Const ECN_NUMBER_ALT4 = "employeeid"
 	Private Const ECN_NAME = "vorname"
+	Private Const ECN_NAME_ALT1 = "givenname"
 	Private Const ECN_SURNAME = "nachname"
+	Private Const ECN_SURNAME_ALT1 = "surname"
 	Private Const ECN_FUNCTION = "funktion"
+	Private Const ECN_DEPARTMENT = "department"
+	Private Const ECN_DATE_OF_ENTRY = "date of entry"
+	Private Const ECN_DATE_OF_TERMINATION = "date of termination"
 
 	Public Shared ReadOnly DataSource As New List(Of UserAccount)
 
@@ -23,7 +28,7 @@ Public Class ExcelActiveUsersParser
 	''' Прочитать файл данных в формате Excel 'HR List'.
 	''' </summary>
 	''' <param name="filePath"></param>
-	Public Sub ReadExcelFile(filePath As String)
+	Public Shared Sub ReadExcelFile(filePath As String)
 		Dim fileName = FileSystem.Path.GetName(filePath)
 		Dim excelConnection As OleDbConnection
 		Try
@@ -77,7 +82,10 @@ Public Class ExcelActiveUsersParser
 						Return c.Name.ToLower() = col.ColumnName.ToLower().Trim() OrElse ' Синонимы:
 						(c.Name = ECN_NUMBER And col.ColumnName.ToLower().Trim() = ECN_NUMBER_ALT1) OrElse
 						(c.Name = ECN_NUMBER And col.ColumnName.ToLower().Trim() = ECN_NUMBER_ALT2) OrElse
-						(c.Name = ECN_NUMBER And col.ColumnName.ToLower().Trim() = ECN_NUMBER_ALT3)
+						(c.Name = ECN_NUMBER And col.ColumnName.ToLower().Trim() = ECN_NUMBER_ALT3) OrElse
+						(c.Name = ECN_NUMBER And col.ColumnName.ToLower().Trim() = ECN_NUMBER_ALT4) OrElse
+						(c.Name = ECN_NAME And col.ColumnName.ToLower().Trim() = ECN_NAME_ALT1) OrElse
+						(c.Name = ECN_SURNAME And col.ColumnName.ToLower().Trim() = ECN_SURNAME_ALT1)
 					End Function)
 				If item IsNot Nothing Then item.Id = 1 ' Метка, колонка найдена.
 			Next
@@ -91,6 +99,13 @@ Public Class ExcelActiveUsersParser
 				Continue For
 			End If
 
+			' Добавить необязательные колонки данных:
+			checkColumns.AddRange({
+				New IdName(100, ECN_DEPARTMENT),
+				New IdName(100, ECN_DATE_OF_ENTRY),
+				New IdName(110, ECN_DATE_OF_TERMINATION)
+			})
+
 			' Парсить данные Excel в лист данных
 			Dim excelRowNumber = 1
 			For Each row As DataRow In ds.Tables.Item(0).Rows
@@ -98,7 +113,7 @@ Public Class ExcelActiveUsersParser
 				Dim item = New UserAccount() With {
 					.Id = DataSource.Count() + 1,
 					.ExcelFileName = fileName,
-					.ExcelSheetName = sheetName,
+					.ExcelSheetName = Replace(sheetName, "$", ""),
 					.ExcelRowNumber = excelRowNumber
 				}
 				Dim needAdd As Boolean = False
@@ -106,23 +121,27 @@ Public Class ExcelActiveUsersParser
 					Dim value = row.Item(col.ColumnName)
 					If value IsNot Nothing And Not IsDBNull(value) Then
 						Select Case col.ColumnName.ToLower().Trim()
-							Case ECN_NUMBER, ECN_NUMBER_ALT1, ECN_NUMBER_ALT2, ECN_NUMBER_ALT3 : item.HrNumber = ValToStr(value)
-							Case ECN_NAME : item.HrName = ValToStr(value)
-							Case ECN_SURNAME : item.HrSurname = ValToStr(value)
-							Case ECN_FUNCTION : item.HrFunction = ValToStr(value)
+							Case ECN_NUMBER, ECN_NUMBER_ALT1, ECN_NUMBER_ALT2, ECN_NUMBER_ALT3, ECN_NUMBER_ALT4
+								item.ImportNumber = ValToStr(value).Trim()
+							Case ECN_NAME, ECN_NAME_ALT1 : item.ImportGivenName = ValToStr(value).Trim()
+							Case ECN_SURNAME, ECN_SURNAME_ALT1 : item.ImportSurname = ValToStr(value).Trim()
+							Case ECN_FUNCTION : item.ImportFunction = ValToStr(value).Trim()
+							Case ECN_DEPARTMENT : item.ImportDepartment = ValToStr(value).Trim()
+							Case ECN_DATE_OF_ENTRY : item.ImportDateOfEntry = ParseOaDate(value)
+							Case ECN_DATE_OF_TERMINATION : item.ImportDateOfTermination = ParseOaDate(value)
 						End Select
 					End If
 				Next
 
 				' Добавить строку в источник, если определён персональный номер.
-				If Not String.IsNullOrWhiteSpace(item.HrNumber) Then DataSource.Add(item)
+				If Not String.IsNullOrWhiteSpace(item.ImportNumber) Then DataSource.Add(item)
 			Next
 		Next
 		Task.Run(Sub() excelConnection.Close())
 	End Sub
 
 	Private Shared Function ParseOaDate(value As Object) As Date?
-		Debug.Print(value.GetType().Name)
+		'Debug.Print(value.GetType().Name)
 		If TypeOf value Is DateTime Then Return CDate(value)
 
 		Dim d = ValToDblN(value)
@@ -134,7 +153,7 @@ Public Class ExcelActiveUsersParser
 	''' <summary>
 	''' Проверить все импортируемые данные, сообщить о проблемах.
 	''' </summary>
-	Public Sub ValidateDataSource()
+	Public Shared Sub ValidateDataSource()
 		For Each item In DataSource
 			ValidateDataSource(item)
 		Next
@@ -143,16 +162,11 @@ Public Class ExcelActiveUsersParser
 	''' <summary>
 	''' Проверить импортируемые данные Project, сообщить о проблемах.
 	''' </summary>
-	Private Sub ValidateDataSource(item As UserAccount)
-		If item.AdObject Is Nothing Then
-			' Записи не сопоставлены.
-			item.CompareStatus = UserAccount.Status.NotCompared
-			item.CompareDescription = "Project is not defined, there are not enough rights, or the project does not exist."
-			Exit Sub
-		End If
+	Private Shared Sub ValidateDataSource(item As UserAccount)
+		If Not item.Compared Then Exit Sub ' Записи не сопоставлены.
 
 		' Нет примечаний
-		item.CompareStatus = UserAccount.Status.Compared
-		item.CompareDescription = String.Empty
+		item.ValidateStatus = UserAccount.Status.Compared
+		item.ValidateDescription = String.Empty
 	End Sub
 End Class

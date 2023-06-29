@@ -1,5 +1,8 @@
 ﻿Imports ProcessBank.Xpo
 
+''' <summary>
+''' Результат сопоставления AdEntries и HR UserAccounts.
+''' </summary>
 Public Class UserAccount
     Inherits DbMetaObject
     Public Overloads Shared ReadOnly Property DboCodeName As String = "NA"
@@ -9,13 +12,13 @@ Public Class UserAccount
     Public Overloads Shared ReadOnly Property HasLocalCache As Boolean = False
     Public Sub New() : End Sub
 
-	Public Property HrNumber As String
-	Public Property HrName As String
-	Public Property HrSurname As String
-	Public Property HrFunction As String
-	Public Property HrDateOfEntry As String
-	Public Property HrDateOfTermination As String
-	Public Property HrDepartment As String
+	Public Property ImportNumber As String
+	Public Property ImportGivenName As String
+	Public Property ImportSurname As String
+	Public Property ImportFunction As String
+	Public Property ImportDateOfEntry As Date?
+	Public Property ImportDateOfTermination As Date?
+	Public Property ImportDepartment As String
 
 	Public Property AdObject As AdObject
 
@@ -23,8 +26,14 @@ Public Class UserAccount
 	Public Property ExcelSheetName As String
 	Public Property ExcelRowNumber As Integer
 
-	Public Property CompareStatus As Status
-	Public Property CompareDescription As String
+	Public ReadOnly Property Compared As Boolean
+		Get
+			Return AdObject IsNot Nothing
+		End Get
+	End Property
+
+	Public Property ValidateDescription As String
+	Public Property ValidateStatus As Status
 
 	Enum Status
 		''' <summary>
@@ -37,10 +46,6 @@ Public Class UserAccount
 		''' </summary>
 		[Error] = -1
 
-		''' <summary>
-		''' Данные не сопоставлены с Directory Enries. (Красный)
-		''' </summary>
-		NotCompared = -2
 	End Enum
 
 #Region "Enrty Properties"
@@ -65,6 +70,12 @@ Public Class UserAccount
 	Public ReadOnly Property Department As String
 		Get
 			Return AdObject?.Department
+		End Get
+	End Property
+
+	Public ReadOnly Property Title As String
+		Get
+			Return AdObject?.Title
 		End Get
 	End Property
 
@@ -98,9 +109,9 @@ Public Class UserAccount
 		End Get
 	End Property
 
-	Public ReadOnly Property LastLogonDate As Date?
+	Public ReadOnly Property LastLogon As Date?
 		Get
-			Return AdObject?.LastLogonDate
+			Return AdObject?.LastLogon
 		End Get
 	End Property
 

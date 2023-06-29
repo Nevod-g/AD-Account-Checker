@@ -8,6 +8,9 @@ Imports ProcessBank.Agent.Tools
 Imports ProcessBank.Agent
 Imports System.Threading.Tasks
 Imports DevExpress.XtraGrid
+Imports DevExpress.XtraGrid.Views.Grid
+Imports DevExpress.XtraGrid.Views.Base
+Imports DevExpress.Data
 
 Public Class frmMain
     Private Const ACB_ADD_FOLDER_NAME = "acbAddDomainController"
@@ -18,6 +21,16 @@ Public Class frmMain
     Private Sub frmMain_Load(sender As Object, e As EventArgs) Handles Me.Load
         ' Применить корпоративный стиль
         Dx.SetDefaultSettingsForGridView(gvUserAccounts, True, False)
+        Dx.AddFormatRules(gvUserAccounts)
+
+        ' Добавить агрегацию в надпись Группировки
+        gvUserAccounts.GroupSummary.Add(New GridGroupSummaryItem() With {
+          .FieldName = NameOf(UserAccount.ExcelRowNumber),
+          .SummaryType = SummaryItemType.Count,
+          .ShowInGroupColumnFooter = Nothing})
+
+        ' Определить предназначение конролов
+        gvUserAccounts.Tag = UserAccount.DboCodeName
     End Sub
 
     Private Sub frmMain_Shown(sender As Object, e As EventArgs) Handles Me.Shown
@@ -26,7 +39,7 @@ Public Class frmMain
             DbXmlWizard.LoadList(AdControllers, Core.APP_DIR_PATH, AdController.DATA_FILE_NAME)
             ' Создать клавиши
             For Each adController In AdControllers
-                Dim aceAdController = AddAdController(adController)
+                Dim aceAdController = AddAceAdController(adController)
                 acAdEntries.Refresh()
                 Application.DoEvents() ' Отобразить визуальный эффект
                 ReloadAdControllerElements(aceAdController)
@@ -39,8 +52,9 @@ Public Class frmMain
         Dim adController = CType(aceAdController.Tag, AdController)
 
         Try
-            Dim domain = New DirectoryEntry("LDAP://" & adController.ServerAddress)
-            BuildControllerTree(aceAdController, domain)
+            adController.RootEntry = New DirectoryEntry("LDAP://" & adController.ServerAddress)
+            adController.RootEntry.AuthenticationType = AuthenticationTypes.Secure
+            BuildControllerTree(aceAdController)
         Catch ex As Exception
             aceAdController.Hint = ex.Message
             aceAdController.Image = My.Resources.breakingchange_16x16
@@ -50,9 +64,11 @@ Public Class frmMain
     ''' <summary>
     ''' Построить дерево зависимостей елементов контроллера.
     ''' </summary>
-    Private Sub BuildControllerTree(aceAdController As AccordionControlElement, entry As DirectoryEntry)
-        For Each children As DirectoryEntry In entry.Children
-            AddAdObject(aceAdController, children)
+    Private Sub BuildControllerTree(aceAdController As AccordionControlElement)
+        Dim adController = CType(aceAdController.Tag, AdController)
+        For Each children As DirectoryEntry In adController.RootEntry.Children
+            Dim adObject = AddAdObject(aceAdController, children)
+            adObject.RootEntry = adController.RootEntry
         Next
     End Sub
 
@@ -60,7 +76,7 @@ Public Class frmMain
     ''' Добавить новую Клавишу-Сервер в акордеон.
     ''' </summary>
     ''' <param name="adController"></param>
-    Public Function AddAdController(adController As AdController) As AccordionControlElement
+    Public Function AddAceAdController(adController As AdController) As AccordionControlElement
         Dim ace As New AccordionControlElement(ElementStyle.Group) With {
             .Text = adController.Name,
             .Hint = adController.ServerAddress,
@@ -99,7 +115,7 @@ Public Class frmMain
     ''' <param name="parentAce"></param>
     ''' <param name="entry"></param>
     ''' <returns></returns>
-    Public Sub AddAdObject(parentAce As AccordionControlElement, entry As DirectoryEntry)
+    Public Function AddAdObject(parentAce As AccordionControlElement, entry As DirectoryEntry) As AdObject
         'If entryCount >= maxEntryCount Then Return
         Dim adObject As AdObject
         If TypeOf parentAce.Tag Is AdObject Then
@@ -121,7 +137,7 @@ Public Class frmMain
 
         ' Определить наличие дочерних элементов и стиль клавиши.
         ace.Style = ElementStyle.Item
-        For Each children In entry.Children
+        For Each children In entry.Children ' Есои есть хотябы один елемент.
             ace.Style = ElementStyle.Group
             Exit For
         Next
@@ -140,7 +156,7 @@ Public Class frmMain
         ' Добавить контекстные кнопки
         Dim acbCheck As New AccordionContextButton()
         acbCheck.Name = "acbCheck"
-        acbCheck.ToolTip = "Check Entry and load structure data." : acbCheck.Tag = "Check"
+        acbCheck.ToolTip = "Check/uncheck Entry and load Structure data." : acbCheck.Tag = "Check"
         acbCheck.AlignmentOptions.Panel = ContextItemPanel.Center
         acbCheck.AlignmentOptions.Position = ContextItemPosition.Far
         acbCheck.ImageOptionsCollection.ItemNormal.ImageUri = "content/checkbox"
@@ -149,7 +165,8 @@ Public Class frmMain
         ace.ContextButtons.Add(acbCheck)
 
         parentAce.Elements.Add(ace) : entryCount += 1
-    End Sub
+        Return adObject
+    End Function
 
     ''' <summary>
     ''' Контроллер контекстных кнопок аккордеона
@@ -215,21 +232,23 @@ Public Class frmMain
 
         ' Определить иконки елементов.
         If adObject.IsChecked Then
-            ace.ImageUri = "actions/apply;Size16x16;Office2013"
+            ace.ImageUri = "content/checkbox"
         ElseIf adObject.IsUser Then
             ace.ImageUri = "people/employee;Size16x16;Office2013"
         ElseIf adObject.ObjectClass = "group" Then
             ace.ImageUri = "people/team;Size16x16;Office2013"
+        ElseIf adObject.ObjectClass = "contact" Then
+            ace.ImageUri = "business%20objects/bo_contact"
         ElseIf adObject.ObjectClass = "builtinDomain" Then
             ace.ImageUri = "business%20objects/bolocalization;Size16x16;Colored"
         ElseIf adObject.ObjectClass = "computer" Then
             ace.ImageUri = "icon%20builder/electronics_laptopwindows;Size16x16"
-            ace.ImageOptions.SvgImageSize = New Size(16, 16)
         ElseIf entry.SchemaClassName <> "organizationalUnit" And entry.SchemaClassName <> "container" Then
             ace.ImageUri = "miscellaneous/cube;Size16x16;GrayScaled"
         Else
             ace.ImageUri = "actions/open;Size16x16;Office2013"
         End If
+        ace.ImageOptions.SvgImageSize = New Size(16, 16)
     End Sub
 
     Private Sub acAdEntries_ExpandStateChanging(sender As Object, e As ExpandStateChangingEventArgs) Handles acAdEntries.ExpandStateChanging
@@ -251,8 +270,12 @@ Public Class frmMain
         If adObject.IsChildLoaded Then Exit Sub ' Пропустить загрузку первого уровны, если дети были загружены ранее
         For Each children As DirectoryEntry In adObject.Entry.Children
             AddAdObject(aceParent, children)
+            Application.DoEvents()
         Next
-        aceParent.Text = $"{adObject.Name} [{adObject.Children?.Count}]"
+        If aceParent.Style = ElementStyle.Group Then
+            aceParent.Text = $"{adObject.Name} [{adObject.Children?.Count}]"
+        End If
+
         adObject.IsChildLoaded = True
     End Sub
 
@@ -290,7 +313,7 @@ Public Class frmMain
         Next
     End Sub
 
-    Private Async Sub bbiImportExcel_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles bbiImportExcel.ItemClick
+    Private Sub bbiImportExcel_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles bbiImportExcel.ItemClick
         ' Отобразить диалоговое окно выбора файла
         Dim ofd = Dx.OpenFileDialog
         ofd.Title = "Choose Excel Files"
@@ -300,38 +323,47 @@ Public Class frmMain
         If ofd.ShowDialog() = DialogResult.OK Then
             Using SplashScreenManager.ShowOverlayForm(gcUserAccounts,,,,,,,,,,,, WaitAnimationType.Line,, True)
                 ' Прочитать данные из файла Excel
-                Dim parser As New ExcelActiveUsersParser
                 For Each filePath In ofd.FileNames
-                    parser.ReadExcelFile(filePath)
+                    ExcelActiveUsersParser.ReadExcelFile(filePath)
                 Next
-
-                Await Task.Run(Sub() AddAdEntriesData(ExcelActiveUsersParser.DataSource))
-                parser.ValidateDataSource()
-
-                ' Подключить данные и обновить View
-                gcUserAccounts.DataSource = New BindingSource(ExcelActiveUsersParser.DataSource, String.Empty)
-                gcUserAccounts.RefreshDataSource()
             End Using
+
+            AddAdEntriesData() ' Добавить данные существующих AdEntries и сопоставить с HR UserAccounts.
         End If
     End Sub
 
+    Private Sub bbiCompareAccounts_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles bbiCompareAccounts.ItemClick
+        AddAdEntriesData() ' Добавить данные существующих AdEntries и сопоставить с HR UserAccounts.
+    End Sub
+
     ''' <summary>
-    ''' Добавить данные существующих AdEntries.
+    ''' Добавить данные существующих AdEntries и сопоставить с HR UserAccounts.
     ''' </summary>
-    Private Sub AddAdEntriesData(dataSource As List(Of UserAccount))
-        ' Загрузить данные выделенных Entries на всю глубину вложенности.
-        Dim deepCheckedAdObjects = GetAllCheckedAdObjects()
+    Private Async Sub AddAdEntriesData()
+        Using SplashScreenManager.ShowOverlayForm(gcUserAccounts,,,,,,,,,,,, WaitAnimationType.Line,, True)
+            Dim dataSource = ExcelActiveUsersParser.DataSource
+            ' Загрузить данные выделенных Entries на всю глубину вложенности.
+            Dim deepCheckedAdObjects = GetAllCheckedAdObjects()
 
-        ' Загрузить из AD Entry значения свойств Users.
-        For Each adObject In deepCheckedAdObjects.Where(Function(o) o.IsUser)
-            adObject.LoadPropertiesData()
-        Next
+            ' Загрузить из AD Entry значения свойств Users.
+            For Each adObject In deepCheckedAdObjects.Where(Function(o) o.IsUser)
+                Await Task.Run(AddressOf adObject.LoadPropertiesData)
+            Next
 
-        ' Сопоставить записи
-        Dim adUsers = deepCheckedAdObjects.Where(Function(u) ValToBool(u.IsUser))
-        For Each userAccount In dataSource
-            userAccount.AdObject = adUsers.FirstOrDefault(Function(p) p.EmployeeId = userAccount.HrNumber)
-        Next
+            ' Сопоставить записи, которые не были сопоставлены ранее.
+            gcUserAccounts.BeginUpdate()
+            Dim adUsers = deepCheckedAdObjects.Where(Function(o) ValToBool(o.IsUser))
+            For Each userAccount In dataSource.Where(Function(u) ValToBool(u.AdObject Is Nothing))
+                userAccount.AdObject = adUsers.FirstOrDefault(Function(p) p.EmployeeId = userAccount.ImportNumber)
+            Next
+
+            ExcelActiveUsersParser.ValidateDataSource()
+
+            ' Подключить данные и обновить View
+            gcUserAccounts.DataSource = New BindingSource(dataSource, String.Empty)
+            gcUserAccounts.EndUpdate()
+            'gcUserAccounts.RefreshDataSource()
+        End Using
     End Sub
 
     ''' <summary>
@@ -361,6 +393,10 @@ Public Class frmMain
 #Region "Context Menu on Row"
 
     Private Sub gcUserAccounts_MouseUp(sender As Object, e As MouseEventArgs) Handles gcUserAccounts.MouseUp
+        Dim hi = gvUserAccounts.CalcHitInfo(e.Location)
+        If hi.RowHandle = GridControl.AutoFilterRowHandle Then Exit Sub
+        If hi.RowHandle = GridControl.InvalidRowHandle Then Exit Sub
+        If hi.RowHandle = GridControl.NewItemRowHandle Then Exit Sub
         If e.Button = MouseButtons.Right Then
             cmsOnRow.Show(CType(sender, GridControl), e.Location)
         End If
@@ -409,6 +445,92 @@ Public Class frmMain
         Dim userAccount = TryCast(gvUserAccounts.GetRow(rowHandle), UserAccount)
         If userAccount.AdObject IsNot Nothing Then
             frmAdObject.ShowDialog(userAccount.AdObject)
+        End If
+    End Sub
+
+    Private Sub acAdEntries_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles acAdEntries.MouseDoubleClick
+
+        Dim hi As AccordionControlHitInfo = acAdEntries.CalcHitInfo(e.Location)
+        Dim aceAdObject = CType(hi.ItemInfo.Element, AccordionControlElement)
+        If aceAdObject Is Nothing Then Exit Sub
+        If TypeOf aceAdObject.Tag IsNot AdObject Then Exit Sub
+        Dim adObject = CType(aceAdObject.Tag, AdObject)
+
+        adObject.LoadPropertiesData()
+        frmAdObject.ShowDialog(adObject)
+    End Sub
+
+    ''' <summary>
+    ''' Рисовать иконку на индикаторе строки.
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub gvUserAccounts_CustomDrawRowIndicator(sender As Object, e As RowIndicatorCustomDrawEventArgs) Handles gvUserAccounts.CustomDrawRowIndicator
+        e.DefaultDraw()
+
+        If e.RowHandle < 0 Then Exit Sub
+        If e.RowHandle = GridControl.AutoFilterRowHandle Then Exit Sub
+        If e.RowHandle = GridControl.InvalidRowHandle Then Exit Sub
+        If e.RowHandle = GridControl.NewItemRowHandle Then Exit Sub
+
+        Dim userAccount = TryCast(gvUserAccounts.GetRow(e.RowHandle), UserAccount)
+        Dim centerByHeight = CInt(e.Info.Bounds.Height / 2)
+        Dim rect As New Rectangle(e.Info.Bounds.Location.X + 4, e.Info.Bounds.Location.Y + centerByHeight - 8, 16, 16)
+
+        Dim notComparedImage = My.Resources.Resources.updownbarsnone_16x16
+        Dim enableUndefinedImage = My.Resources.Resources.question_16x16
+        Dim enableImage = My.Resources.Resources.apply_16x16
+        Dim disableImage = My.Resources.Resources.cancel_16x16
+
+        If userAccount.AdObject Is Nothing Then
+            e.Cache.DrawImage(notComparedImage, rect)
+        ElseIf userAccount.Enabled Is Nothing Then
+            e.Cache.DrawImage(enableUndefinedImage, rect)
+        ElseIf userAccount.Enabled Then
+            e.Cache.DrawImage(enableImage, rect)
+        Else
+            e.Cache.DrawImage(disableImage, rect)
+        End If
+    End Sub
+
+    Private Sub gvUserAccounts_CustomDrawCell(sender As Object, e As RowCellCustomDrawEventArgs) Handles gvUserAccounts.CustomDrawCell
+        e.DefaultDraw()
+        Dim gv = CType(sender, GridView)
+        ' Рисовать Акцент - рамку вокруг ячейки, имеющей новое значение.
+        Dim needDrawEmphasis As Boolean = False
+        Select Case e.Column.FieldName
+            Case NameOf(UserAccount.GivenName)
+                Dim userAccount = TryCast(gv.GetRow(e.RowHandle), UserAccount)
+                needDrawEmphasis = userAccount.GivenName <> userAccount.ImportGivenName And
+                    userAccount.GivenName IsNot Nothing And
+                    userAccount.ImportGivenName IsNot Nothing
+
+            Case NameOf(UserAccount.Surname)
+                Dim userAccount = TryCast(gv.GetRow(e.RowHandle), UserAccount)
+                needDrawEmphasis = userAccount.Surname <> userAccount.ImportSurname And
+                    userAccount.Surname IsNot Nothing And
+                    userAccount.ImportSurname IsNot Nothing
+
+            Case NameOf(UserAccount.Title)
+                Dim userAccount = TryCast(gv.GetRow(e.RowHandle), UserAccount)
+                needDrawEmphasis = userAccount.Title <> userAccount.ImportFunction And
+                    userAccount.Title IsNot Nothing And
+                    userAccount.ImportFunction IsNot Nothing
+
+            Case NameOf(UserAccount.Department)
+                Dim userAccount = TryCast(gv.GetRow(e.RowHandle), UserAccount)
+                needDrawEmphasis = userAccount.Department <> userAccount.ImportDepartment And
+                    userAccount.Department IsNot Nothing And
+                    userAccount.ImportDepartment IsNot Nothing
+        End Select
+
+        If needDrawEmphasis Then
+            ' Настройки рисования
+            e.Cache.Graphics.SmoothingMode = Drawing2D.SmoothingMode.AntiAlias
+            e.Cache.Graphics.CompositingQuality = Drawing2D.CompositingQuality.HighQuality
+            e.Cache.Graphics.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
+
+            e.Cache.DrawRectangle(e.Bounds, Color.PaleVioletRed, 1)
         End If
     End Sub
 End Class
