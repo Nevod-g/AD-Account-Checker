@@ -1,16 +1,15 @@
-﻿Imports System.DirectoryServices
-Imports Adac.AdRepository
-Imports DevExpress.Data.Helpers
+﻿Imports Adac.AdRepository
+Imports DevExpress.Data
 Imports DevExpress.Utils
 Imports DevExpress.XtraBars.Navigation
-Imports DevExpress.XtraSplashScreen
-Imports ProcessBank.Agent.Tools
-Imports ProcessBank.Agent
-Imports System.Threading.Tasks
 Imports DevExpress.XtraGrid
-Imports DevExpress.XtraGrid.Views.Grid
 Imports DevExpress.XtraGrid.Views.Base
-Imports DevExpress.Data
+Imports DevExpress.XtraGrid.Views.Grid
+Imports DevExpress.XtraSplashScreen
+Imports ProcessBank.Agent
+Imports ProcessBank.Agent.Tools
+Imports System.DirectoryServices
+Imports System.Threading.Tasks
 
 Public Class frmMain
     Private Const ACB_ADD_FOLDER_NAME = "acbAddDomainController"
@@ -105,6 +104,16 @@ Public Class frmMain
         acbRefresh.Visibility = ContextItemVisibility.Auto
         ace.ContextButtons.Add(acbRefresh)
 
+        Dim acbUncheckAllEntries As New AccordionContextButton()
+        acbUncheckAllEntries.Name = "acbUncheckAllEntries"
+        acbUncheckAllEntries.ToolTip = "Uncheck all Entries" : acbUncheckAllEntries.Tag = "UncheckAllEntries"
+        acbUncheckAllEntries.AlignmentOptions.Panel = ContextItemPanel.Center
+        acbUncheckAllEntries.AlignmentOptions.Position = ContextItemPosition.Far
+        acbUncheckAllEntries.ImageOptionsCollection.ItemNormal.ImageUri = "scheduling/changestatus2"
+        acbUncheckAllEntries.ImageOptionsCollection.ItemNormal.SvgImageSize = New Size(16, 16)
+        acbUncheckAllEntries.Visibility = ContextItemVisibility.Auto
+        ace.ContextButtons.Add(acbUncheckAllEntries)
+
         aceDomainControllers.Elements.Add(ace)
         Return ace
     End Function
@@ -133,6 +142,7 @@ Public Class frmMain
             .Hint = hint,
             .Tag = adObject
         }
+        adObject.Ace = ace
         RefreshAceView(ace)
 
         ' Определить наличие дочерних элементов и стиль клавиши.
@@ -212,6 +222,15 @@ Public Class frmMain
                 Else
                     CheckedAdObjects.Remove(adObject)
                 End If
+
+            Case "UncheckAllEntries"
+                acAdEntries.BeginUpdate()
+                For Each adObject In CheckedAdObjects
+                    adObject.IsChecked = False
+                    RefreshAceView(adObject.Ace)
+                Next
+                CheckedAdObjects.Clear()
+                acAdEntries.EndUpdate()
 
             Case "Info"
                 Dim aceAdObject = CType(e.DataItem, AccordionControlElement)
@@ -355,6 +374,7 @@ Public Class frmMain
             Dim adUsers = deepCheckedAdObjects.Where(Function(o) ValToBool(o.IsUser))
             For Each userAccount In dataSource.Where(Function(u) ValToBool(u.AdObject Is Nothing))
                 userAccount.AdObject = adUsers.FirstOrDefault(Function(p) p.EmployeeId = userAccount.ImportNumber)
+                If userAccount.AdObject IsNot Nothing Then userAccount.AdObject.UserAccount = userAccount ' Добавить обратную ссылку
             Next
 
             ExcelActiveUsersParser.ValidateDataSource()
@@ -369,7 +389,7 @@ Public Class frmMain
     ''' <summary>
     ''' Получить список отмеченных записей на всю глубину вложенности.
     ''' </summary>
-    Private Function GetAllCheckedAdObjects() As List(Of AdObject)
+    Public Function GetAllCheckedAdObjects() As List(Of AdObject)
         Dim deepCheckedAdObjects As New List(Of AdObject)
         For Each adObject In CheckedAdObjects
             deepCheckedAdObjects.Add(adObject)
@@ -394,6 +414,7 @@ Public Class frmMain
 
     Private Sub gcUserAccounts_MouseUp(sender As Object, e As MouseEventArgs) Handles gcUserAccounts.MouseUp
         Dim hi = gvUserAccounts.CalcHitInfo(e.Location)
+        If hi.RowHandle < 0 Then Exit Sub
         If hi.RowHandle = GridControl.AutoFilterRowHandle Then Exit Sub
         If hi.RowHandle = GridControl.InvalidRowHandle Then Exit Sub
         If hi.RowHandle = GridControl.NewItemRowHandle Then Exit Sub
@@ -403,8 +424,10 @@ Public Class frmMain
     End Sub
 
     Private Sub cmsOnRow_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles cmsOnRow.Opening
+        'Dim hi = gvUserAccounts.CalcHitInfo(cmsOnRow.Location)
         Dim rowHandle = gvUserAccounts.FocusedRowHandle
         Dim item = TryCast(gvUserAccounts.GetRow(rowHandle), UserAccount)
+
         tsmiDeleteRows.Visible = item IsNot Nothing
     End Sub
 
@@ -449,9 +472,8 @@ Public Class frmMain
     End Sub
 
     Private Sub acAdEntries_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles acAdEntries.MouseDoubleClick
-
-        Dim hi As AccordionControlHitInfo = acAdEntries.CalcHitInfo(e.Location)
-        Dim aceAdObject = CType(hi.ItemInfo.Element, AccordionControlElement)
+        Dim hi = acAdEntries.CalcHitInfo(e.Location)
+        Dim aceAdObject = hi.ItemInfo.Element
         If aceAdObject Is Nothing Then Exit Sub
         If TypeOf aceAdObject.Tag IsNot AdObject Then Exit Sub
         Dim adObject = CType(aceAdObject.Tag, AdObject)
@@ -501,27 +523,19 @@ Public Class frmMain
         Select Case e.Column.FieldName
             Case NameOf(UserAccount.GivenName)
                 Dim userAccount = TryCast(gv.GetRow(e.RowHandle), UserAccount)
-                needDrawEmphasis = userAccount.GivenName <> userAccount.ImportGivenName And
-                    userAccount.GivenName IsNot Nothing And
-                    userAccount.ImportGivenName IsNot Nothing
+                needDrawEmphasis = userAccount.IsGivenNameValid
 
             Case NameOf(UserAccount.Surname)
                 Dim userAccount = TryCast(gv.GetRow(e.RowHandle), UserAccount)
-                needDrawEmphasis = userAccount.Surname <> userAccount.ImportSurname And
-                    userAccount.Surname IsNot Nothing And
-                    userAccount.ImportSurname IsNot Nothing
+                needDrawEmphasis = userAccount.IsSurnameValid
 
             Case NameOf(UserAccount.Title)
                 Dim userAccount = TryCast(gv.GetRow(e.RowHandle), UserAccount)
-                needDrawEmphasis = userAccount.Title <> userAccount.ImportFunction And
-                    userAccount.Title IsNot Nothing And
-                    userAccount.ImportFunction IsNot Nothing
+                needDrawEmphasis = userAccount.IsTitleValid
 
             Case NameOf(UserAccount.Department)
                 Dim userAccount = TryCast(gv.GetRow(e.RowHandle), UserAccount)
-                needDrawEmphasis = userAccount.Department <> userAccount.ImportDepartment And
-                    userAccount.Department IsNot Nothing And
-                    userAccount.ImportDepartment IsNot Nothing
+                needDrawEmphasis = userAccount.IsDepartmentValid
         End Select
 
         If needDrawEmphasis Then
@@ -531,6 +545,48 @@ Public Class frmMain
             e.Cache.Graphics.InterpolationMode = Drawing2D.InterpolationMode.HighQualityBicubic
 
             e.Cache.DrawRectangle(e.Bounds, Color.PaleVioletRed, 1)
+        End If
+    End Sub
+
+    Private Sub bbiHelp_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles bbiHelp.ItemClick
+        Process.Start("https://ipgphotonics.atlassian.net/wiki/spaces/~63c031c7eac4f07e3f3c1ad6/pages/129269761/AD+Account+Checker")
+    End Sub
+
+    Private Sub bbiExportEntriesToExcel_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles bbiExportEntriesToExcel.ItemClick
+        Reporting.ExportAdEntries.ExcelTechnology.CreateReport()
+    End Sub
+
+    Private Sub gvUserAccounts_FilterEditorCreated(sender As Object, e As FilterControlEventArgs) Handles gvUserAccounts.FilterEditorCreated
+        ' Разрешить режим Custom Filter
+        If e.FilterControl IsNot Nothing Then ' блок не работает, всегда in Nothing...
+            e.FilterControl.ShowOperandTypeIcon = True
+            e.FilterControl.AllowCustomExpressions = DefaultBoolean.True
+            e.FilterControl.ShowCustomFunctions = DefaultBoolean.True
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Экспортировать текущее представление данных.
+    ''' </summary>
+    ''' <param name="sender"></param>
+    ''' <param name="e"></param>
+    Private Sub bbiExportDataView_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles bbiExportDataView.ItemClick
+        If ExcelActiveUsersParser.DataSource?.Count > 0 Then
+            ' Отобразить диалоговое окно сохранения файла
+            Dim sfd = Dx.SaveFileDialog
+            sfd.Title = "Save Report"
+            sfd.FileName = "User Accounts"
+            sfd.Filter = $"Excel Workbook (*.xlsx)|*.xlsx"
+            If sfd.ShowDialog() = DialogResult.OK Then
+                gvUserAccounts.ExportToXlsx(sfd.FileName)
+
+                ' Открыть файл
+                Dim proc As New Process
+                proc.StartInfo.FileName = sfd.FileName
+                proc.Start() : proc.Dispose()
+            End If
+        Else
+            Message.Show("Current data view is empty.", "Export current Data View")
         End If
     End Sub
 End Class

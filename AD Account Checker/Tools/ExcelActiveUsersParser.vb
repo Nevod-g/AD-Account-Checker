@@ -14,12 +14,16 @@ Public NotInheritable Class ExcelActiveUsersParser
 	Private Const ECN_NUMBER_ALT4 = "employeeid"
 	Private Const ECN_NAME = "vorname"
 	Private Const ECN_NAME_ALT1 = "givenname"
+	Private Const ECN_NAME_ALT2 = "name"
 	Private Const ECN_SURNAME = "nachname"
 	Private Const ECN_SURNAME_ALT1 = "surname"
 	Private Const ECN_FUNCTION = "funktion"
+	Private Const ECN_FUNCTION_ALT1 = "title"
 	Private Const ECN_DEPARTMENT = "department"
-	Private Const ECN_DATE_OF_ENTRY = "date of entry"
-	Private Const ECN_DATE_OF_TERMINATION = "date of termination"
+	Private Const ECN_DEPARTMENT_ALT1 = "abteilung"
+	Private Const ECN_DEPARTMENT_ALT2 = "abteilungsname"
+	Private Const ECN_DATE_OF_ENTRY = "dateofentry"
+	Private Const ECN_DATE_OF_TERMINATION = "dateoftermination"
 
 	Public Shared ReadOnly DataSource As New List(Of UserAccount)
 
@@ -70,22 +74,21 @@ Public NotInheritable Class ExcelActiveUsersParser
 			Dim checkColumns = New List(Of IdName)
 			checkColumns.AddRange({
 				New IdName(0, ECN_NUMBER),
-				New IdName(0, ECN_NAME),
-				New IdName(0, ECN_SURNAME),
-				New IdName(0, ECN_FUNCTION)
+				New IdName(0, ECN_NAME)
 			})
 
 			' Проверить доступность данных на листе	
 			For Each col As DataColumn In ds.Tables.Item(0).Columns
+				Dim fieldName = Replace(col.ColumnName.ToLower(), " ", "")
 				Dim item = checkColumns.FirstOrDefault(
-					Function(c)
-						Return c.Name.ToLower() = col.ColumnName.ToLower().Trim() OrElse ' Синонимы:
-						(c.Name = ECN_NUMBER And col.ColumnName.ToLower().Trim() = ECN_NUMBER_ALT1) OrElse
-						(c.Name = ECN_NUMBER And col.ColumnName.ToLower().Trim() = ECN_NUMBER_ALT2) OrElse
-						(c.Name = ECN_NUMBER And col.ColumnName.ToLower().Trim() = ECN_NUMBER_ALT3) OrElse
-						(c.Name = ECN_NUMBER And col.ColumnName.ToLower().Trim() = ECN_NUMBER_ALT4) OrElse
-						(c.Name = ECN_NAME And col.ColumnName.ToLower().Trim() = ECN_NAME_ALT1) OrElse
-						(c.Name = ECN_SURNAME And col.ColumnName.ToLower().Trim() = ECN_SURNAME_ALT1)
+                    Function(c)
+						Return c.Name.ToLower() = fieldName OrElse ' Синонимы:
+						(c.Name = ECN_NUMBER And fieldName = ECN_NUMBER_ALT1) OrElse
+						(c.Name = ECN_NUMBER And fieldName = ECN_NUMBER_ALT2) OrElse
+						(c.Name = ECN_NUMBER And fieldName = ECN_NUMBER_ALT3) OrElse
+						(c.Name = ECN_NUMBER And fieldName = ECN_NUMBER_ALT4) OrElse
+						(c.Name = ECN_NAME And fieldName = ECN_NAME_ALT1) OrElse
+						(c.Name = ECN_NAME And fieldName = ECN_NAME_ALT2)
 					End Function)
 				If item IsNot Nothing Then item.Id = 1 ' Метка, колонка найдена.
 			Next
@@ -101,9 +104,11 @@ Public NotInheritable Class ExcelActiveUsersParser
 
 			' Добавить необязательные колонки данных:
 			checkColumns.AddRange({
-				New IdName(100, ECN_DEPARTMENT),
-				New IdName(100, ECN_DATE_OF_ENTRY),
-				New IdName(110, ECN_DATE_OF_TERMINATION)
+				New IdName(0, ECN_SURNAME),
+				New IdName(0, ECN_FUNCTION),
+				New IdName(0, ECN_DEPARTMENT),
+				New IdName(0, ECN_DATE_OF_ENTRY),
+				New IdName(0, ECN_DATE_OF_TERMINATION)
 			})
 
 			' Парсить данные Excel в лист данных
@@ -118,15 +123,17 @@ Public NotInheritable Class ExcelActiveUsersParser
 				}
 				Dim needAdd As Boolean = False
 				For Each col As DataColumn In ds.Tables.Item(0).Columns
+					Dim fieldName = Replace(col.ColumnName.ToLower(), " ", "")
 					Dim value = row.Item(col.ColumnName)
 					If value IsNot Nothing And Not IsDBNull(value) Then
-						Select Case col.ColumnName.ToLower().Trim()
+						Select Case fieldName
 							Case ECN_NUMBER, ECN_NUMBER_ALT1, ECN_NUMBER_ALT2, ECN_NUMBER_ALT3, ECN_NUMBER_ALT4
 								item.ImportNumber = ValToStr(value).Trim()
-							Case ECN_NAME, ECN_NAME_ALT1 : item.ImportGivenName = ValToStr(value).Trim()
+							Case ECN_NAME, ECN_NAME_ALT1, ECN_NAME_ALT2 : item.ImportGivenName = ValToStr(value).Trim()
 							Case ECN_SURNAME, ECN_SURNAME_ALT1 : item.ImportSurname = ValToStr(value).Trim()
-							Case ECN_FUNCTION : item.ImportFunction = ValToStr(value).Trim()
-							Case ECN_DEPARTMENT : item.ImportDepartment = ValToStr(value).Trim()
+							Case ECN_FUNCTION, ECN_FUNCTION_ALT1 : item.ImportFunction = ValToStr(value).Trim()
+							Case ECN_DEPARTMENT, ECN_DEPARTMENT_ALT1, ECN_DEPARTMENT_ALT2
+								item.ImportDepartment = ValToStr(value).Trim()
 							Case ECN_DATE_OF_ENTRY : item.ImportDateOfEntry = ParseOaDate(value)
 							Case ECN_DATE_OF_TERMINATION : item.ImportDateOfTermination = ParseOaDate(value)
 						End Select

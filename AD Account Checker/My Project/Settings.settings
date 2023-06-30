@@ -1,7 +1,9 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" UseMySettingsClassName="true">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="ReportingExceptCompanies" Type="System.String" Scope="User">
+      <Value Profile="(Default)">IPG Laser GmbH, IPG Photonics (Czech Republic) s.r.o., IPG Photonics (Spain) S.L., IPG Photonics Sp. z o.o., IPG Photonics Corporation, IRE-POLUS, IPG Photonics France SAS, IPG Photonics (UK) Ltd., IPGL Contractor, Ruchtech ltd, IPG Photonics Corporation Eurasia</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

@@ -10,7 +10,7 @@
     Public Shared AdObjects As New List(Of AdObject)
 
     ''' <summary>
-    ''' отмеченные пользователем Directory Entries.
+    ''' Отмеченные пользователем Directory Entries.
     ''' </summary>
     Public Shared CheckedAdObjects As New List(Of AdObject)
 End Class

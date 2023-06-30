@@ -18,6 +18,7 @@ Public NotInheritable Class Core
 
 #Region "Global Paths"
     Public Shared ReadOnly APP_DIR_PATH As String = FileSystem.APP_DIR_PATH
+    Public Shared ReadOnly REPORTS_TEMPLATES_DIR_PATH As String = FileSystem.Path.Combine(APP_DIR_PATH, "Templates")
 #End Region
 
 End Class

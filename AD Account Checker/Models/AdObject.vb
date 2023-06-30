@@ -2,6 +2,7 @@
 Imports ProcessBank.Xpo
 Imports ProcessBank.Agent.Tools
 Imports System.Runtime.InteropServices
+Imports DevExpress.XtraBars.Navigation
 
 Public Class AdObject
     Inherits DbMetaObject
@@ -37,9 +38,11 @@ Public Class AdObject
         End If
     End Sub
 
+    Public Property Ace As AccordionControlElement
     Public Property Parent As AdObject
     Public Property RootEntry As DirectoryEntry
     Public Property Entry As DirectoryEntry
+    Public Property UserAccount As UserAccount
     Public ReadOnly Property Children As New List(Of AdObject)
     Public Property Path As String
     Public Property Name As String
@@ -50,7 +53,6 @@ Public Class AdObject
     ''' <summary>
     ''' Пользователь отметил эдемент птичкой.
     ''' </summary>
-    ''' <returns></returns>
     Public Property IsChecked As Boolean
 
     ''' <summary>

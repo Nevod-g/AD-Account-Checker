@@ -116,5 +116,37 @@ Public Class UserAccount
 	End Property
 
 #End Region
+
+#Region "Validation"
+	Public ReadOnly Property IsValid As Boolean
+		Get
+			Return IsGivenNameValid And IsSurnameValid And IsTitleValid And IsDepartmentValid
+		End Get
+	End Property
+
+	Public ReadOnly Property IsGivenNameValid As Boolean
+		Get
+			Return GivenName <> ImportGivenName And GivenName IsNot Nothing And ImportGivenName IsNot Nothing
+		End Get
+	End Property
+
+	Public ReadOnly Property IsSurnameValid As Boolean
+		Get
+			Return Surname <> ImportSurname And Surname IsNot Nothing And ImportSurname IsNot Nothing
+		End Get
+	End Property
+
+	Public ReadOnly Property IsTitleValid As Boolean
+		Get
+			Return Title <> ImportFunction And Title IsNot Nothing And ImportFunction IsNot Nothing
+		End Get
+	End Property
+
+	Public ReadOnly Property IsDepartmentValid As Boolean
+		Get
+			Return Department <> ImportDepartment And Department IsNot Nothing And ImportDepartment IsNot Nothing
+		End Get
+	End Property
+#End Region
 End Class
 

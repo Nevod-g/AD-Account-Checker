@@ -69,20 +69,32 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevExpress.CodeParser.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Data.v22.2" />
     <Reference Include="DevExpress.Data.Desktop.v22.2" />
+    <Reference Include="DevExpress.DataAccess.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.DataAccess.v22.2.UI, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.Diagram.v22.2.Core, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Dialogs.v22.2.Core, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Images.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.Printing.v22.2.Core, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.RichEdit.v22.2.Core, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Utils.v22.2" />
+    <Reference Include="DevExpress.Utils.v22.2.UI, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Xpo.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraBars.v22.2" />
+    <Reference Include="DevExpress.XtraDiagram.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraDialogs.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v22.2" />
     <Reference Include="DevExpress.Drawing.v22.2" />
     <Reference Include="DevExpress.XtraGrid.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraLayout.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraPrinting.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraRichEdit.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.XtraTreeList.v22.2, Version=22.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="ProcessBank.Agent">
       <HintPath>Resources\ProcessBank.Agent.dll</HintPath>
     </Reference>
@@ -93,6 +105,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -100,6 +113,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -123,6 +137,15 @@
     </Compile>
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="Models\UserAccount.vb" />
+    <Compile Include="Reporting\ExcelEngine.vb" />
+    <Compile Include="Reporting\ExportAdEntries\ExcelTechnology.vb" />
+    <Compile Include="Reporting\ExportAdEntries\frmParameters.Designer.vb">
+      <DependentUpon>frmParameters.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reporting\ExportAdEntries\frmParameters.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reporting\FormulaParser.vb" />
     <Compile Include="System\AdRepository.vb" />
     <Compile Include="System\AppException.vb" />
     <Compile Include="System\Core.vb" />
@@ -175,6 +198,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reporting\ExportAdEntries\frmParameters.resx">
+      <DependentUpon>frmParameters.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="System\frmException.resx">
       <DependentUpon>frmException.vb</DependentUpon>
@@ -234,6 +260,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AD.ico" />
+    <None Include="Resources\export_32x32.png" />
+    <None Include="Resources\export_16x16.png" />
+    <None Include="Resources\properties_16x16.png" />
+    <None Include="Resources\exporttoxlsx_32x32.png" />
+    <None Include="Resources\exporttoxlsx_16x16.png" />
+    <None Include="Resources\knowledgebasearticle_32x32.png" />
+    <None Include="Resources\knowledgebasearticle_16x16.png" />
+    <None Include="Resources\content_32x32.png" />
+    <None Include="Resources\content_16x16.png" />
     <None Include="Resources\question_32x32.png" />
     <None Include="Resources\question_16x16.png" />
     <None Include="Resources\updownbarsnone_32x32.png" />
@@ -254,6 +289,7 @@
     <None Include="Resources\clearall_16x16.png" />
     <None Include="Resources\AD.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
