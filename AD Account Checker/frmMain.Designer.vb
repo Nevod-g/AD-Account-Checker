@@ -33,29 +33,38 @@ Partial Class frmMain
         Me.tsmiClearAll = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTipController = New DevExpress.Utils.ToolTipController(Me.components)
         Me.gvUserAccounts = New DevExpress.XtraGrid.Views.BandedGrid.AdvBandedGridView()
+        Me.gbId = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
         Me.bgcImportNumber = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcEmployeeId = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.gbName = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
         Me.bgcImportGivenName = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcGivenName = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.gbSurname = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
         Me.bgcImportSurname = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcSurname = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.gbTitle = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
         Me.bgcImportFunction = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcTitle = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.gbDepartment = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
         Me.bgcImportDepartment = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcDepartment = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.gbOther = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
         Me.bgcImportDateOfEntry = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.RepositoryItemDateTimeEdit = New DevExpress.XtraEditors.Repository.RepositoryItemDateEdit()
         Me.bgcImportDateOfTermination = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcEnabled = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcCompared = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcCompany = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.gbDetail = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
         Me.bgcSamAccountName = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcLastLogon = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcAccountExpirationDate = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcDistinguishedName = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.gbValidationResult = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
+        Me.bgcIsValid = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
+        Me.gbValidation = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
         Me.bgcIsGivenNameValid = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcIsSurnameValid = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
-        Me.bgcIsValid = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcIsTitleValid = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcIsDepartmentValid = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
         Me.bgcExcelFileName = New DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn()
@@ -72,15 +81,6 @@ Partial Class frmMain
         Me.acAdEntries = New DevExpress.XtraBars.Navigation.AccordionControl()
         Me.aceDomainControllers = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.FluentDesignFormControl1 = New DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl()
-        Me.gbId = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
-        Me.gbName = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
-        Me.gbSurname = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
-        Me.gbTitle = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
-        Me.gbDepartment = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
-        Me.gbOther = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
-        Me.gbDetail = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
-        Me.gbValidationResult = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
-        Me.gbValidation = New DevExpress.XtraGrid.Views.BandedGrid.GridBand()
         Me.FluentDesignFormContainer1.SuspendLayout()
         CType(Me.gcUserAccounts, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.cmsOnRow.SuspendLayout()
@@ -196,6 +196,16 @@ Partial Class frmMain
         Me.gvUserAccounts.OptionsView.ShowBands = False
         Me.gvUserAccounts.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.bgcExcelFileName, DevExpress.Data.ColumnSortOrder.Ascending), New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.bgcExcelSheetName, DevExpress.Data.ColumnSortOrder.Ascending)})
         '
+        'gbId
+        '
+        Me.gbId.Caption = "ID"
+        Me.gbId.Columns.Add(Me.bgcImportNumber)
+        Me.gbId.Columns.Add(Me.bgcEmployeeId)
+        Me.gbId.Name = "gbId"
+        Me.gbId.OptionsBand.AllowMove = False
+        Me.gbId.VisibleIndex = 0
+        Me.gbId.Width = 82
+        '
         'bgcImportNumber
         '
         Me.bgcImportNumber.Caption = "↓ Employee ID"
@@ -215,6 +225,16 @@ Partial Class frmMain
         Me.bgcEmployeeId.Visible = True
         Me.bgcEmployeeId.Width = 82
         '
+        'gbName
+        '
+        Me.gbName.Caption = "Name"
+        Me.gbName.Columns.Add(Me.bgcImportGivenName)
+        Me.gbName.Columns.Add(Me.bgcGivenName)
+        Me.gbName.Name = "gbName"
+        Me.gbName.OptionsBand.AllowMove = False
+        Me.gbName.VisibleIndex = 1
+        Me.gbName.Width = 99
+        '
         'bgcImportGivenName
         '
         Me.bgcImportGivenName.Caption = "↓ Given Name"
@@ -230,6 +250,16 @@ Partial Class frmMain
         Me.bgcGivenName.RowIndex = 1
         Me.bgcGivenName.Visible = True
         Me.bgcGivenName.Width = 99
+        '
+        'gbSurname
+        '
+        Me.gbSurname.Caption = "Surname"
+        Me.gbSurname.Columns.Add(Me.bgcImportSurname)
+        Me.gbSurname.Columns.Add(Me.bgcSurname)
+        Me.gbSurname.Name = "gbSurname"
+        Me.gbSurname.OptionsBand.AllowMove = False
+        Me.gbSurname.VisibleIndex = 2
+        Me.gbSurname.Width = 117
         '
         'bgcImportSurname
         '
@@ -247,6 +277,16 @@ Partial Class frmMain
         Me.bgcSurname.Visible = True
         Me.bgcSurname.Width = 117
         '
+        'gbTitle
+        '
+        Me.gbTitle.Caption = "Title"
+        Me.gbTitle.Columns.Add(Me.bgcImportFunction)
+        Me.gbTitle.Columns.Add(Me.bgcTitle)
+        Me.gbTitle.Name = "gbTitle"
+        Me.gbTitle.Visible = False
+        Me.gbTitle.VisibleIndex = -1
+        Me.gbTitle.Width = 110
+        '
         'bgcImportFunction
         '
         Me.bgcImportFunction.Caption = "↓ Function"
@@ -262,6 +302,15 @@ Partial Class frmMain
         Me.bgcTitle.RowIndex = 1
         Me.bgcTitle.Visible = True
         Me.bgcTitle.Width = 110
+        '
+        'gbDepartment
+        '
+        Me.gbDepartment.Caption = "Department"
+        Me.gbDepartment.Columns.Add(Me.bgcImportDepartment)
+        Me.gbDepartment.Columns.Add(Me.bgcDepartment)
+        Me.gbDepartment.Name = "gbDepartment"
+        Me.gbDepartment.VisibleIndex = 3
+        Me.gbDepartment.Width = 127
         '
         'bgcImportDepartment
         '
@@ -279,6 +328,18 @@ Partial Class frmMain
         Me.bgcDepartment.RowIndex = 1
         Me.bgcDepartment.Visible = True
         Me.bgcDepartment.Width = 127
+        '
+        'gbOther
+        '
+        Me.gbOther.Caption = "Other"
+        Me.gbOther.Columns.Add(Me.bgcImportDateOfEntry)
+        Me.gbOther.Columns.Add(Me.bgcImportDateOfTermination)
+        Me.gbOther.Columns.Add(Me.bgcEnabled)
+        Me.gbOther.Columns.Add(Me.bgcCompared)
+        Me.gbOther.Columns.Add(Me.bgcCompany)
+        Me.gbOther.Name = "gbOther"
+        Me.gbOther.VisibleIndex = 4
+        Me.gbOther.Width = 331
         '
         'bgcImportDateOfEntry
         '
@@ -332,6 +393,17 @@ Partial Class frmMain
         Me.bgcCompany.Visible = True
         Me.bgcCompany.Width = 206
         '
+        'gbDetail
+        '
+        Me.gbDetail.Caption = "Detail"
+        Me.gbDetail.Columns.Add(Me.bgcSamAccountName)
+        Me.gbDetail.Columns.Add(Me.bgcLastLogon)
+        Me.gbDetail.Columns.Add(Me.bgcAccountExpirationDate)
+        Me.gbDetail.Columns.Add(Me.bgcDistinguishedName)
+        Me.gbDetail.Name = "gbDetail"
+        Me.gbDetail.VisibleIndex = 5
+        Me.gbDetail.Width = 374
+        '
         'bgcSamAccountName
         '
         Me.bgcSamAccountName.Caption = "Sam Account Name"
@@ -368,6 +440,33 @@ Partial Class frmMain
         Me.bgcDistinguishedName.Visible = True
         Me.bgcDistinguishedName.Width = 374
         '
+        'gbValidationResult
+        '
+        Me.gbValidationResult.Caption = "Validation Result"
+        Me.gbValidationResult.Columns.Add(Me.bgcIsValid)
+        Me.gbValidationResult.Name = "gbValidationResult"
+        Me.gbValidationResult.VisibleIndex = 6
+        Me.gbValidationResult.Width = 47
+        '
+        'bgcIsValid
+        '
+        Me.bgcIsValid.FieldName = "IsValid"
+        Me.bgcIsValid.Name = "bgcIsValid"
+        Me.bgcIsValid.RowCount = 2
+        Me.bgcIsValid.Visible = True
+        Me.bgcIsValid.Width = 47
+        '
+        'gbValidation
+        '
+        Me.gbValidation.Caption = "Validation"
+        Me.gbValidation.Columns.Add(Me.bgcIsGivenNameValid)
+        Me.gbValidation.Columns.Add(Me.bgcIsSurnameValid)
+        Me.gbValidation.Columns.Add(Me.bgcIsTitleValid)
+        Me.gbValidation.Columns.Add(Me.bgcIsDepartmentValid)
+        Me.gbValidation.Name = "gbValidation"
+        Me.gbValidation.VisibleIndex = 7
+        Me.gbValidation.Width = 126
+        '
         'bgcIsGivenNameValid
         '
         Me.bgcIsGivenNameValid.FieldName = "IsGivenNameValid"
@@ -381,14 +480,6 @@ Partial Class frmMain
         Me.bgcIsSurnameValid.Name = "bgcIsSurnameValid"
         Me.bgcIsSurnameValid.Visible = True
         Me.bgcIsSurnameValid.Width = 65
-        '
-        'bgcIsValid
-        '
-        Me.bgcIsValid.FieldName = "IsValid"
-        Me.bgcIsValid.Name = "bgcIsValid"
-        Me.bgcIsValid.RowCount = 2
-        Me.bgcIsValid.Visible = True
-        Me.bgcIsValid.Width = 47
         '
         'bgcIsTitleValid
         '
@@ -463,7 +554,7 @@ Partial Class frmMain
         '
         'bbiExportEntriesToExcel
         '
-        Me.bbiExportEntriesToExcel.Caption = "Export checked AD Entries to Excel"
+        Me.bbiExportEntriesToExcel.Caption = "Export checked AD User Entries to Excel"
         Me.bbiExportEntriesToExcel.Id = 6
         Me.bbiExportEntriesToExcel.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.[True]
         Me.bbiExportEntriesToExcel.ImageOptions.Image = Global.Adac.My.Resources.Resources.exporttoxlsx_16x16
@@ -539,97 +630,6 @@ Partial Class frmMain
         Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiExportEntriesToExcel)
         Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiHelp)
         Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiExportDataView)
-        '
-        'gbId
-        '
-        Me.gbId.Caption = "ID"
-        Me.gbId.Columns.Add(Me.bgcImportNumber)
-        Me.gbId.Columns.Add(Me.bgcEmployeeId)
-        Me.gbId.Name = "gbId"
-        Me.gbId.OptionsBand.AllowMove = False
-        Me.gbId.VisibleIndex = 0
-        Me.gbId.Width = 82
-        '
-        'gbName
-        '
-        Me.gbName.Caption = "Name"
-        Me.gbName.Columns.Add(Me.bgcImportGivenName)
-        Me.gbName.Columns.Add(Me.bgcGivenName)
-        Me.gbName.Name = "gbName"
-        Me.gbName.OptionsBand.AllowMove = False
-        Me.gbName.VisibleIndex = 1
-        Me.gbName.Width = 99
-        '
-        'gbSurname
-        '
-        Me.gbSurname.Caption = "Surname"
-        Me.gbSurname.Columns.Add(Me.bgcImportSurname)
-        Me.gbSurname.Columns.Add(Me.bgcSurname)
-        Me.gbSurname.Name = "gbSurname"
-        Me.gbSurname.OptionsBand.AllowMove = False
-        Me.gbSurname.VisibleIndex = 2
-        Me.gbSurname.Width = 117
-        '
-        'gbTitle
-        '
-        Me.gbTitle.Caption = "Title"
-        Me.gbTitle.Columns.Add(Me.bgcImportFunction)
-        Me.gbTitle.Columns.Add(Me.bgcTitle)
-        Me.gbTitle.Name = "gbTitle"
-        Me.gbTitle.Visible = False
-        Me.gbTitle.VisibleIndex = -1
-        Me.gbTitle.Width = 110
-        '
-        'gbDepartment
-        '
-        Me.gbDepartment.Caption = "Department"
-        Me.gbDepartment.Columns.Add(Me.bgcImportDepartment)
-        Me.gbDepartment.Columns.Add(Me.bgcDepartment)
-        Me.gbDepartment.Name = "gbDepartment"
-        Me.gbDepartment.VisibleIndex = 3
-        Me.gbDepartment.Width = 127
-        '
-        'gbOther
-        '
-        Me.gbOther.Caption = "Other"
-        Me.gbOther.Columns.Add(Me.bgcImportDateOfEntry)
-        Me.gbOther.Columns.Add(Me.bgcImportDateOfTermination)
-        Me.gbOther.Columns.Add(Me.bgcEnabled)
-        Me.gbOther.Columns.Add(Me.bgcCompared)
-        Me.gbOther.Columns.Add(Me.bgcCompany)
-        Me.gbOther.Name = "gbOther"
-        Me.gbOther.VisibleIndex = 4
-        Me.gbOther.Width = 331
-        '
-        'gbDetail
-        '
-        Me.gbDetail.Caption = "Detail"
-        Me.gbDetail.Columns.Add(Me.bgcSamAccountName)
-        Me.gbDetail.Columns.Add(Me.bgcLastLogon)
-        Me.gbDetail.Columns.Add(Me.bgcAccountExpirationDate)
-        Me.gbDetail.Columns.Add(Me.bgcDistinguishedName)
-        Me.gbDetail.Name = "gbDetail"
-        Me.gbDetail.VisibleIndex = 5
-        Me.gbDetail.Width = 374
-        '
-        'gbValidationResult
-        '
-        Me.gbValidationResult.Caption = "Validation Result"
-        Me.gbValidationResult.Columns.Add(Me.bgcIsValid)
-        Me.gbValidationResult.Name = "gbValidationResult"
-        Me.gbValidationResult.VisibleIndex = 6
-        Me.gbValidationResult.Width = 47
-        '
-        'gbValidation
-        '
-        Me.gbValidation.Caption = "Validation"
-        Me.gbValidation.Columns.Add(Me.bgcIsGivenNameValid)
-        Me.gbValidation.Columns.Add(Me.bgcIsSurnameValid)
-        Me.gbValidation.Columns.Add(Me.bgcIsTitleValid)
-        Me.gbValidation.Columns.Add(Me.bgcIsDepartmentValid)
-        Me.gbValidation.Name = "gbValidation"
-        Me.gbValidation.VisibleIndex = 7
-        Me.gbValidation.Width = 126
         '
         'frmMain
         '

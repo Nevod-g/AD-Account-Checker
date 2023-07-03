@@ -546,7 +546,8 @@ Public Class frmMain
     End Sub
 
     Private Sub bbiHelp_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles bbiHelp.ItemClick
-        Process.Start("https://ipgphotonics.atlassian.net/wiki/spaces/~63c031c7eac4f07e3f3c1ad6/pages/129269761/AD+Account+Checker")
+        'Process.Start("https://ipgphotonics.atlassian.net/wiki/spaces/~63c031c7eac4f07e3f3c1ad6/pages/129269761/AD+Account+Checker")
+        Process.Start(FileSystem.Path.Combine(FileSystem.APP_DIR_PATH, "AD Checker Instruction.pdf"))
     End Sub
 
     Private Sub bbiExportEntriesToExcel_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles bbiExportEntriesToExcel.ItemClick

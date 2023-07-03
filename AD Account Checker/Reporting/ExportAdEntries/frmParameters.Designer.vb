@@ -33,11 +33,13 @@
                 '
                 'ceExceptComparedEntries
                 '
+                Me.ceExceptComparedEntries.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
                 Me.ceExceptComparedEntries.Location = New System.Drawing.Point(12, 12)
                 Me.ceExceptComparedEntries.Name = "ceExceptComparedEntries"
                 Me.ceExceptComparedEntries.Properties.Caption = "Except compared Entries"
                 Me.ceExceptComparedEntries.Properties.NullStyle = DevExpress.XtraEditors.Controls.StyleIndeterminate.Unchecked
-                Me.ceExceptComparedEntries.Size = New System.Drawing.Size(137, 20)
+                Me.ceExceptComparedEntries.Size = New System.Drawing.Size(270, 20)
                 Me.ceExceptComparedEntries.TabIndex = 0
                 '
                 'sbCancel
@@ -72,11 +74,13 @@
                 '
                 'ceExceptCompanies
                 '
+                Me.ceExceptCompanies.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
                 Me.ceExceptCompanies.Location = New System.Drawing.Point(12, 38)
                 Me.ceExceptCompanies.Name = "ceExceptCompanies"
                 Me.ceExceptCompanies.Properties.Caption = "Except Companies"
                 Me.ceExceptCompanies.Properties.NullStyle = DevExpress.XtraEditors.Controls.StyleIndeterminate.Unchecked
-                Me.ceExceptCompanies.Size = New System.Drawing.Size(137, 20)
+                Me.ceExceptCompanies.Size = New System.Drawing.Size(270, 20)
                 Me.ceExceptCompanies.TabIndex = 0
                 '
                 'frmParameters
