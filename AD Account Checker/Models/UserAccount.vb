@@ -126,25 +126,25 @@ Public Class UserAccount
 
 	Public ReadOnly Property IsGivenNameValid As Boolean
 		Get
-			Return GivenName <> ImportGivenName And GivenName IsNot Nothing And ImportGivenName IsNot Nothing
+			Return GivenName = ImportGivenName And GivenName IsNot Nothing And ImportGivenName IsNot Nothing
 		End Get
 	End Property
 
 	Public ReadOnly Property IsSurnameValid As Boolean
 		Get
-			Return Surname <> ImportSurname And Surname IsNot Nothing And ImportSurname IsNot Nothing
+			Return Surname = ImportSurname And Surname IsNot Nothing And ImportSurname IsNot Nothing
 		End Get
 	End Property
 
 	Public ReadOnly Property IsTitleValid As Boolean
 		Get
-			Return Title <> ImportFunction And Title IsNot Nothing And ImportFunction IsNot Nothing
+			Return Title = ImportFunction And Title IsNot Nothing And ImportFunction IsNot Nothing
 		End Get
 	End Property
 
 	Public ReadOnly Property IsDepartmentValid As Boolean
 		Get
-			Return Department <> ImportDepartment And Department IsNot Nothing And ImportDepartment IsNot Nothing
+			Return Department = ImportDepartment And Department IsNot Nothing And ImportDepartment IsNot Nothing
 		End Get
 	End Property
 #End Region

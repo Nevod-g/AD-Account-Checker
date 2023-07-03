@@ -520,22 +520,19 @@ Public Class frmMain
         Dim gv = CType(sender, GridView)
         ' Рисовать Акцент - рамку вокруг ячейки, имеющей новое значение.
         Dim needDrawEmphasis As Boolean = False
+        Dim userAccount = TryCast(gv.GetRow(e.RowHandle), UserAccount)
         Select Case e.Column.FieldName
-            Case NameOf(UserAccount.GivenName)
-                Dim userAccount = TryCast(gv.GetRow(e.RowHandle), UserAccount)
-                needDrawEmphasis = userAccount.IsGivenNameValid
+            Case NameOf(userAccount.GivenName)
+                needDrawEmphasis = Not userAccount.IsGivenNameValid
 
             Case NameOf(UserAccount.Surname)
-                Dim userAccount = TryCast(gv.GetRow(e.RowHandle), UserAccount)
-                needDrawEmphasis = userAccount.IsSurnameValid
+                needDrawEmphasis = Not userAccount.IsSurnameValid
 
             Case NameOf(UserAccount.Title)
-                Dim userAccount = TryCast(gv.GetRow(e.RowHandle), UserAccount)
-                needDrawEmphasis = userAccount.IsTitleValid
+                needDrawEmphasis = Not userAccount.IsTitleValid
 
             Case NameOf(UserAccount.Department)
-                Dim userAccount = TryCast(gv.GetRow(e.RowHandle), UserAccount)
-                needDrawEmphasis = userAccount.IsDepartmentValid
+                needDrawEmphasis = Not userAccount.IsDepartmentValid
         End Select
 
         If needDrawEmphasis Then
