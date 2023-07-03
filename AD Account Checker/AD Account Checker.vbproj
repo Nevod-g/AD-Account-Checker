@@ -47,7 +47,7 @@
     <StartupObject>Adac.My.MyApplication</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>AD.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\AD.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -265,7 +265,6 @@
     <None Include="Resources\bo_attention.svg" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AD.ico" />
     <None Include="Resources\export_32x32.png" />
     <None Include="Resources\export_16x16.png" />
     <None Include="Resources\properties_16x16.png" />
