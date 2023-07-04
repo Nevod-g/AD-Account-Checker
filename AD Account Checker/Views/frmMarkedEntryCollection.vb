@@ -87,8 +87,9 @@ Public Class frmMarkedEntryCollection
                         ' Найти и развернуть элементы (которые могут быть не загружены)
                         For Each el In parentAce.Elements
                             If el.Text = s Then
-                                parentAce = el
                                 frmMain.AddTopLevelAceElements(el)
+                                parentAce = el
+                                Exit For
                             End If
                         Next
                     End If
