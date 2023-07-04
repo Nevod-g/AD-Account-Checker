@@ -1,7 +1,6 @@
 ﻿Imports System.DirectoryServices
 Imports ProcessBank.Xpo
 Imports ProcessBank.Agent.Tools
-Imports System.Runtime.InteropServices
 Imports DevExpress.XtraBars.Navigation
 
 Public Class AdObject
@@ -23,10 +22,11 @@ Public Class AdObject
 
     Public Sub New(entry As DirectoryEntry, Optional parent As AdObject = Nothing)
         Me.Parent = parent
-        Me.RootEntry = parent?.RootEntry
+        ' Если добавляется первый уровень элементов то RootEntry будет entry.Parent, в ином случае брать RootEntry отца.
+        Me.RootEntry = CType(IIf(parent Is Nothing, entry.Parent, parent?.RootEntry), DirectoryEntry)
         Me.Entry = entry
         Me.Path = entry.Path
-        Me.Name = IIf(Mid(ValToStr(entry.Name), 3, 1) = "=", Mid(entry.Name, 4), entry.Name).ToString()
+        Me.Name = Ldap.GetEntryNativeName(entry)
         Me.ObjectClass = entry.SchemaClassName
         Me.ObjectGUID = entry.Guid.ToString()
         Me.IsUser = entry.SchemaClassName = "user"
@@ -39,16 +39,15 @@ Public Class AdObject
     End Sub
 
     Public Property Ace As AccordionControlElement
-    Public Property Parent As AdObject
-    Public Property RootEntry As DirectoryEntry
-    Public Property Entry As DirectoryEntry
+    Public ReadOnly Property Parent As AdObject
+    Public ReadOnly Property RootEntry As DirectoryEntry
+    Public ReadOnly Property Entry As DirectoryEntry
     Public Property UserAccount As UserAccount
     Public ReadOnly Property Children As New List(Of AdObject)
-    Public Property Path As String
+    Public ReadOnly Property Path As String
     Public Property Name As String
-    Public Property ObjectClass As String
-    Public Property ObjectCategory As String
-    Public Property ObjectGUID As String
+    Public ReadOnly Property ObjectClass As String
+    Public ReadOnly Property ObjectGUID As String
 
     ''' <summary>
     ''' Пользователь отметил эдемент птичкой.
@@ -78,8 +77,29 @@ Public Class AdObject
 
     Public Property IsUser As Boolean
 
+    Private _nativePath As String
+    Public ReadOnly Property NativePath As String
+        Get
+            If _nativePath Is Nothing Then
+                _nativePath = GetNativePath()
+            End If
+            Return _nativePath
+        End Get
+    End Property
+
+    Private Function GetNativePath() As String
+        Dim nativePath = Name
+        Dim parent = Me.Parent
+        While parent IsNot Nothing ' Собирать путь пока есть отец
+            nativePath = $"{parent.Name}\{nativePath}"
+            parent = parent.Parent
+        End While
+        Return $"{Ldap.GetEntryNativeName(RootEntry)}\{nativePath}"
+    End Function
+
 #Region "Properties"
     Public Property SamAccountName As String
+    Public Property ObjectCategory As String
     Public Property GivenName As String
     Public Property Surname As String
     Public Property Department As String

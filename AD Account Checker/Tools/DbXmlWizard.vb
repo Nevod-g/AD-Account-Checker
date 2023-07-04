@@ -6,7 +6,7 @@ Imports System.Reflection
 
 ''' <summary>
 ''' Инструмент для работы с файлами XML. Объекты в листе должны быть однотипными.
-''' v.1.0
+''' v.1.1
 ''' </summary>
 Public Class DbXmlWizard
     Public Const ELEMENT_NAME_LIST As String = "List"
@@ -48,7 +48,7 @@ Public Class DbXmlWizard
         xDoc.Element(ELEMENT_NAME_LIST).Add(New XAttribute(ATTRIBUTE_NAME_СDB_LAST_UPDATE, cdbLastUpdate)) ' Указать дату последнего обновления данных в CDB
 
         For Each obj In dataList
-            Dim objectIdPropertyInfo = properties.FirstOrDefault(Function(p) p.Name = NameOf(AdController.Id))
+            Dim objectIdPropertyInfo = properties.FirstOrDefault(Function(p) p.Name = NameOf(DbMetaObject.Id))
             Dim objectId = ValToInt(objectIdPropertyInfo.GetValue(obj))
             Dim xObj As New XElement(ELEMENT_NAME_OBJECT)
             xObj.Add(New XAttribute(ATTRIBUTE_NAME_INDEX, i)) : i += 1
@@ -232,7 +232,58 @@ Public Class DbXmlWizard
                                           dirPath As String,
                                           fileName As String) As List(Of T)
         Dim filePath = FileSystem.Path.Combine(dirPath, fileName)
-        dataList = LoadList(GetType(T), filePath).OfType(Of T).ToList
+        dataList = LoadList(GetType(T), filePath).OfType(Of T).ToList()
         Return dataList
     End Function
+
+#Region "Process String Array"
+    ''' <summary>
+    ''' Сохранить Array в файл XML.
+    ''' </summary>
+    ''' <param name="strings"></param>
+    ''' <param name="filePath"></param>
+    Public Shared Sub SaveArray(strings As String(), filePath As String)
+        ' Пост
+        If strings Is Nothing OrElse strings.Count() = 0 Then Exit Sub
+
+        ' Удалить файл перед записью
+        Dim dirPath = FileSystem.Path.GetParentDirPath(filePath)
+        FileSystem.CreateDir(dirPath)
+        FileSystem.DeleteFile(filePath, False)
+
+        ' Инициализация
+        Dim xDoc As New XDocument(New XElement(ELEMENT_NAME_LIST)) ' XML документ
+        xDoc.Element(ELEMENT_NAME_LIST).Add(New XAttribute(ATTRIBUTE_NAME_TYPE, GetType(String()).Name))
+        xDoc.Element(ELEMENT_NAME_LIST).Add(New XAttribute(ATTRIBUTE_NAME_CREATE_DT, Now)) ' Указать дату создания файла
+
+        For Each value In strings
+            Dim xObj As New XElement(ELEMENT_NAME_OBJECT)
+            xObj.Add(New XAttribute(ATTRIBUTE_NAME_VALUE, value))
+            xDoc.Element(ELEMENT_NAME_LIST).Add(xObj)
+        Next
+
+        xDoc.Save(filePath) ' Сохранить документ в файл
+    End Sub
+
+    ''' <summary>
+    ''' Загрузить данные в Array из файла XML.
+    ''' </summary>
+    ''' <param name="filePath"></param>
+    Public Shared Function LoadArray(filePath As String) As String()
+        If Not FileSystem.FileExists(filePath) Then Return Nothing
+
+        ' Инициализация
+        Dim dirPath = FileSystem.Path.GetParentDirPath(filePath)
+        Dim xDoc As XDocument ' XML документ
+        xDoc = XDocument.Load(filePath) ' Читать файл
+        Dim strings As New List(Of String)
+
+        ' Перебрать все объекты в списке
+        For Each xObj In xDoc.Elements(ELEMENT_NAME_LIST).Elements(ELEMENT_NAME_OBJECT)
+            strings.Add(xObj.Attribute(ATTRIBUTE_NAME_VALUE).Value)
+        Next
+
+        Return strings.ToArray()
+    End Function
+#End Region
 End Class

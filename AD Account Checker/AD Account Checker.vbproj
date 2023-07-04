@@ -129,10 +129,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
-    <Compile Include="frmAdObject.Designer.vb">
+    <Compile Include="Views\frmAdObject.Designer.vb">
       <DependentUpon>frmAdObject.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmAdObject.vb">
+    <Compile Include="Views\frmAdObject.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GlobalSuppressions.vb" />
@@ -163,16 +163,16 @@
     </Compile>
     <Compile Include="System\Message.vb" />
     <Compile Include="Tools\ExcelActiveUsersParser.vb" />
-    <Compile Include="frmAddAdController.Designer.vb">
+    <Compile Include="Views\frmAddAdController.Designer.vb">
       <DependentUpon>frmAddAdController.vb</DependentUpon>
     </Compile>
-    <Compile Include="frmAddAdController.vb">
+    <Compile Include="Views\frmAddAdController.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMain.vb">
+    <Compile Include="Views\frmMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmMain.Designer.vb">
+    <Compile Include="Views\frmMain.Designer.vb">
       <DependentUpon>frmMain.vb</DependentUpon>
     </Compile>
     <Compile Include="Models\AdObject.vb" />
@@ -190,13 +190,19 @@
     <Compile Include="Tools\Dx.vb" />
     <Compile Include="Tools\Ldap.vb" />
     <Compile Include="Tools\_Graphic.vb" />
-    <EmbeddedResource Include="frmAddAdController.resx">
+    <Compile Include="Views\frmMarkedEntryCollection.Designer.vb">
+      <DependentUpon>frmMarkedEntryCollection.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Views\frmMarkedEntryCollection.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="Views\frmAddAdController.resx">
       <DependentUpon>frmAddAdController.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmAdObject.resx">
+    <EmbeddedResource Include="Views\frmAdObject.resx">
       <DependentUpon>frmAdObject.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmMain.resx">
+    <EmbeddedResource Include="Views\frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reporting\ExportAdEntries\frmParameters.resx">
@@ -219,6 +225,9 @@
     </Compile>
     <EmbeddedResource Include="System\frmWait.resx">
       <DependentUpon>frmWait.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\frmMarkedEntryCollection.resx">
+      <DependentUpon>frmMarkedEntryCollection.vb</DependentUpon>
     </EmbeddedResource>
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
@@ -294,7 +303,12 @@
     <None Include="Resources\clearall_16x16.png" />
     <None Include="Resources\AD.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\issue_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\issue_32x32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

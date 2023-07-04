@@ -25,7 +25,8 @@ Public Class frmAdObject
             $"{NameOf(adObject.Enabled)}: {adObject.Enabled}{vbCrLf}" &
             $"{NameOf(adObject.AccountExpirationDate)}: {adObject.AccountExpirationDate}{vbCrLf}" &
             $"{NameOf(adObject.DistinguishedName)}: {adObject.DistinguishedName}{vbCrLf}" &
-            $"{NameOf(adObject.LastLogon)}: {adObject.LastLogon}{vbCrLf}"
+            $"{NameOf(adObject.LastLogon)}: {adObject.LastLogon}{vbCrLf}" &
+            $"{NameOf(adObject.NativePath)}: {adObject.NativePath}{vbCrLf}"
         meInfo.DeselectAll()
         tePropertyValue.EditValue = Nothing
         tePropertyName.EditValue = Nothing
@@ -35,11 +36,11 @@ Public Class frmAdObject
     Private Sub sbGetPropertyValue_Click(sender As Object, e As EventArgs) Handles sbGetPropertyValue.Click
         Dim result = AdObject.GetPropertyValue(tePropertyName.Text)
 
-        If String.IsNullOrWhiteSpace(tePropertyValue.Text) Then
-            result = ValToStr(
-                Ldap.GetUserPropertyValue(AdObject.RootEntry, AdObject.SamAccountName, tePropertyName.Text)
-            )
-        End If
+        'If String.IsNullOrWhiteSpace(tePropertyValue.Text) Then
+        '    result = ValToStr(
+        '        Ldap.GetUserPropertyValue(AdObject.RootEntry, AdObject.SamAccountName, tePropertyName.Text)
+        '    )
+        'End If
 
         tePropertyValue.EditValue = result
     End Sub

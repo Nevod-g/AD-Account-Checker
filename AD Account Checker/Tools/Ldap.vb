@@ -7,6 +7,10 @@ Imports ProcessBank.Agent.Tools
 ''' </summary>
 Public NotInheritable Class Ldap
 
+    Public Shared Function GetEntryNativeName(entry As DirectoryEntry) As String
+        Return IIf(Mid(ValToStr(entry.Name), 3, 1) = "=", Mid(entry.Name, 4), entry.Name).ToString()
+    End Function
+
     Public Shared Function GetUserPropertyValue(rootEntry As DirectoryEntry, samAccountName As String, propertyName As String) As Object
         Dim searcher = New DirectorySearcher(rootEntry)
         If String.IsNullOrWhiteSpace(samAccountName) Then Throw New ArgumentException("SamAccountName can't be Null or White Space!")

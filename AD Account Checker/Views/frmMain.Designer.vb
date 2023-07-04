@@ -78,6 +78,7 @@ Partial Class frmMain
         Me.bbiExportEntriesToExcel = New DevExpress.XtraBars.BarButtonItem()
         Me.bbiHelp = New DevExpress.XtraBars.BarButtonItem()
         Me.bbiExportDataView = New DevExpress.XtraBars.BarButtonItem()
+        Me.bbiMarkedEntries = New DevExpress.XtraBars.BarButtonItem()
         Me.acAdEntries = New DevExpress.XtraBars.Navigation.AccordionControl()
         Me.aceDomainControllers = New DevExpress.XtraBars.Navigation.AccordionControlElement()
         Me.FluentDesignFormControl1 = New DevExpress.XtraBars.FluentDesignSystem.FluentDesignFormControl()
@@ -521,8 +522,8 @@ Partial Class frmMain
         'FluentFormDefaultManager
         '
         Me.FluentFormDefaultManager.Form = Me
-        Me.FluentFormDefaultManager.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.bbiCompare, Me.bbiImport, Me.bbiImportExcel, Me.bbiCompareAccounts, Me.bbiExportEntriesToExcel, Me.bbiHelp, Me.bbiExportDataView})
-        Me.FluentFormDefaultManager.MaxItemId = 9
+        Me.FluentFormDefaultManager.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.bbiCompare, Me.bbiImport, Me.bbiImportExcel, Me.bbiCompareAccounts, Me.bbiExportEntriesToExcel, Me.bbiHelp, Me.bbiExportDataView, Me.bbiMarkedEntries})
+        Me.FluentFormDefaultManager.MaxItemId = 10
         '
         'bbiCompare
         '
@@ -575,9 +576,18 @@ Partial Class frmMain
         '
         Me.bbiExportDataView.Caption = "Export current Data view to Excel"
         Me.bbiExportDataView.Id = 8
+        Me.bbiExportDataView.ImageOptions.AllowGlyphSkinning = DevExpress.Utils.DefaultBoolean.[True]
         Me.bbiExportDataView.ImageOptions.Image = Global.Adac.My.Resources.Resources.export_16x16
         Me.bbiExportDataView.ImageOptions.LargeImage = Global.Adac.My.Resources.Resources.export_32x32
         Me.bbiExportDataView.Name = "bbiExportDataView"
+        '
+        'bbiMarkedEntries
+        '
+        Me.bbiMarkedEntries.Caption = "Collection of marked Entries"
+        Me.bbiMarkedEntries.Id = 9
+        Me.bbiMarkedEntries.ImageOptions.Image = Global.Adac.My.Resources.Resources.issue_16x16
+        Me.bbiMarkedEntries.ImageOptions.LargeImage = Global.Adac.My.Resources.Resources.issue_32x32
+        Me.bbiMarkedEntries.Name = "bbiMarkedEntries"
         '
         'acAdEntries
         '
@@ -617,7 +627,7 @@ Partial Class frmMain
         'FluentDesignFormControl1
         '
         Me.FluentDesignFormControl1.FluentDesignForm = Me
-        Me.FluentDesignFormControl1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.bbiCompare, Me.bbiImport, Me.bbiImportExcel, Me.bbiCompareAccounts, Me.bbiExportEntriesToExcel, Me.bbiHelp, Me.bbiExportDataView})
+        Me.FluentDesignFormControl1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.bbiCompare, Me.bbiImport, Me.bbiImportExcel, Me.bbiCompareAccounts, Me.bbiExportEntriesToExcel, Me.bbiHelp, Me.bbiExportDataView, Me.bbiMarkedEntries})
         Me.FluentDesignFormControl1.Location = New System.Drawing.Point(0, 0)
         Me.FluentDesignFormControl1.Manager = Me.FluentFormDefaultManager
         Me.FluentDesignFormControl1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
@@ -625,9 +635,10 @@ Partial Class frmMain
         Me.FluentDesignFormControl1.Size = New System.Drawing.Size(1400, 30)
         Me.FluentDesignFormControl1.TabIndex = 2
         Me.FluentDesignFormControl1.TabStop = False
+        Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiMarkedEntries)
         Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiImportExcel)
         Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiCompareAccounts)
-        Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiExportEntriesToExcel)
+        Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiExportEntriesToExcel, True)
         Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiHelp)
         Me.FluentDesignFormControl1.TitleItemLinks.Add(Me.bbiExportDataView)
         '
@@ -717,4 +728,5 @@ Partial Class frmMain
     Friend WithEvents gbDetail As DevExpress.XtraGrid.Views.BandedGrid.GridBand
     Friend WithEvents gbValidationResult As DevExpress.XtraGrid.Views.BandedGrid.GridBand
     Friend WithEvents gbValidation As DevExpress.XtraGrid.Views.BandedGrid.GridBand
+    Friend WithEvents bbiMarkedEntries As DevExpress.XtraBars.BarButtonItem
 End Class

@@ -67,7 +67,6 @@ Public Class frmMain
         Dim adController = CType(aceAdController.Tag, AdController)
         For Each children As DirectoryEntry In adController.RootEntry.Children
             Dim adObject = AddAdObject(aceAdController, children)
-            adObject.RootEntry = adController.RootEntry
         Next
     End Sub
 
@@ -123,12 +122,12 @@ Public Class frmMain
     ''' </summary>
     ''' <param name="parentAce"></param>
     ''' <param name="entry"></param>
-    ''' <returns></returns>
     Public Function AddAdObject(parentAce As AccordionControlElement, entry As DirectoryEntry) As AdObject
-        'If entryCount >= maxEntryCount Then Return
+        ' Определить adObject
         Dim adObject As AdObject
         If TypeOf parentAce.Tag Is AdObject Then
-            adObject = New AdObject(entry, CType(parentAce.Tag, AdObject))
+            Dim adObjectParent = CType(parentAce.Tag, AdObject)
+            adObject = New AdObject(entry, adObjectParent)
         Else
             adObject = New AdObject(entry)
         End If
@@ -210,27 +209,11 @@ Public Class frmMain
 
             Case "Check"
                 Dim aceAdObject = CType(e.DataItem, AccordionControlElement)
-                Dim adObject = CType(aceAdObject.Tag, AdObject)
-                adObject.IsChecked = Not adObject.IsChecked
-                RefreshAceView(aceAdObject)
-                LoadAllCheckedAceElements()
+                CheckEntry(aceAdObject)
                 acAdEntries.Refresh()
 
-                ' Дбавить или удалить из репозитория отмеченных элементов
-                If adObject.IsChecked Then
-                    CheckedAdObjects.Add(adObject)
-                Else
-                    CheckedAdObjects.Remove(adObject)
-                End If
-
             Case "UncheckAllEntries"
-                acAdEntries.BeginUpdate()
-                For Each adObject In CheckedAdObjects
-                    adObject.IsChecked = False
-                    RefreshAceView(adObject.Ace)
-                Next
-                CheckedAdObjects.Clear()
-                acAdEntries.EndUpdate()
+                UncheckAllEntries()
 
             Case "Info"
                 Dim aceAdObject = CType(e.DataItem, AccordionControlElement)
@@ -239,6 +222,30 @@ Public Class frmMain
                 adObject.LoadPropertiesData()
                 frmAdObject.ShowDialog(adObject)
         End Select
+    End Sub
+
+    Public Sub CheckEntry(aceAdObject As AccordionControlElement)
+        Dim adObject = CType(aceAdObject.Tag, AdObject)
+        adObject.IsChecked = Not adObject.IsChecked
+        RefreshAceView(aceAdObject)
+        LoadAllCheckedAceElements()
+
+        ' Дбавить или удалить из репозитория отмеченных элементов
+        If adObject.IsChecked Then
+            CheckedAdObjects.Add(adObject)
+        Else
+            CheckedAdObjects.Remove(adObject)
+        End If
+    End Sub
+
+    Public Sub UncheckAllEntries()
+        acAdEntries.BeginUpdate()
+        For Each adObject In CheckedAdObjects
+            adObject.IsChecked = False
+            RefreshAceView(adObject.Ace)
+        Next
+        CheckedAdObjects.Clear()
+        acAdEntries.EndUpdate()
     End Sub
 
     ''' <summary>
@@ -284,7 +291,7 @@ Public Class frmMain
     ''' Triggered on expanding.
     ''' </summary>
     ''' <param name="aceParent"></param>
-    Private Sub AddTopLevelAceElements(aceParent As AccordionControlElement)
+    Public Sub AddTopLevelAceElements(aceParent As AccordionControlElement)
         Dim adObject = CType(aceParent.Tag, AdObject)
         If adObject.IsChildLoaded Then Exit Sub ' Пропустить загрузку первого уровны, если дети были загружены ранее
         For Each children As DirectoryEntry In adObject.Entry.Children
@@ -328,7 +335,7 @@ Public Class frmMain
                 frmWait.SetDescription($"Number of Loaded Entries: {entryCount}")
             End If
 
-            AddAllAceElements(ace) ' Рекурсивно передбрать всю глубину вложенности.
+            AddAllAceElements(ace) ' Рекурсивно перебрать всю глубину вложенности.
         Next
     End Sub
 
@@ -586,5 +593,9 @@ Public Class frmMain
         Else
             Message.Show("Current data view is empty.", "Export current Data View")
         End If
+    End Sub
+
+    Private Sub bbiMarkedEntries_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles bbiMarkedEntries.ItemClick
+        frmMarkedEntryCollection.ShowDialog()
     End Sub
 End Class
