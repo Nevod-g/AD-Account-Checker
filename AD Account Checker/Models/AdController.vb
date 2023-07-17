@@ -20,6 +20,6 @@ Public Class AdController
 
     Public Property ServerAddress As String
 
-    Public Property RootEntry As DirectoryEntry
+    Public RootEntry As DirectoryEntry ' Должно оставаться полем, чтобы не записывалось в XML (при чтении возникает ошибка приведения типа).
 
 End Class
