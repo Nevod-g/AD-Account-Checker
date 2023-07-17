@@ -52,7 +52,7 @@ Partial Class frmMarkedEntryCollection
         Me.sbApply.Location = New System.Drawing.Point(6, 321)
         Me.sbApply.Name = "sbApply"
         Me.sbApply.Size = New System.Drawing.Size(125, 23)
-        Me.sbApply.TabIndex = 2
+        Me.sbApply.TabIndex = 3
         Me.sbApply.Text = "Apply"
         '
         'sbDelete
@@ -60,7 +60,7 @@ Partial Class frmMarkedEntryCollection
         Me.sbDelete.Location = New System.Drawing.Point(6, 34)
         Me.sbDelete.Name = "sbDelete"
         Me.sbDelete.Size = New System.Drawing.Size(125, 23)
-        Me.sbDelete.TabIndex = 3
+        Me.sbDelete.TabIndex = 2
         Me.sbDelete.Text = "Delete Collection"
         '
         'PanelControl1

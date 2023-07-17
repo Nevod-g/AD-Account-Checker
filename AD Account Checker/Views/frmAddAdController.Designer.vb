@@ -36,7 +36,7 @@ Partial Class frmAddAdController
         Me.sbCancel.Location = New System.Drawing.Point(220, 70)
         Me.sbCancel.Name = "sbCancel"
         Me.sbCancel.Size = New System.Drawing.Size(75, 23)
-        Me.sbCancel.TabIndex = 1
+        Me.sbCancel.TabIndex = 3
         Me.sbCancel.Text = "Cancel"
         '
         'clName
@@ -61,7 +61,7 @@ Partial Class frmAddAdController
         Me.sbAdd.Location = New System.Drawing.Point(139, 70)
         Me.sbAdd.Name = "sbAdd"
         Me.sbAdd.Size = New System.Drawing.Size(75, 23)
-        Me.sbAdd.TabIndex = 0
+        Me.sbAdd.TabIndex = 2
         Me.sbAdd.Text = "Add"
         '
         'teServerAddress
@@ -72,7 +72,7 @@ Partial Class frmAddAdController
         Me.teServerAddress.Location = New System.Drawing.Point(92, 38)
         Me.teServerAddress.Name = "teServerAddress"
         Me.teServerAddress.Size = New System.Drawing.Size(203, 20)
-        Me.teServerAddress.TabIndex = 2
+        Me.teServerAddress.TabIndex = 1
         Me.teServerAddress.Tag = "ServerAddress"
         '
         'teName
@@ -82,7 +82,7 @@ Partial Class frmAddAdController
         Me.teName.Location = New System.Drawing.Point(92, 12)
         Me.teName.Name = "teName"
         Me.teName.Size = New System.Drawing.Size(203, 20)
-        Me.teName.TabIndex = 2
+        Me.teName.TabIndex = 0
         Me.teName.Tag = "Name"
         '
         'frmAddAdController

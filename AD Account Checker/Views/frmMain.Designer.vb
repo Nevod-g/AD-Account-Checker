@@ -116,7 +116,7 @@ Partial Class frmMain
         Me.gcUserAccounts.Name = "gcUserAccounts"
         Me.gcUserAccounts.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.RepositoryItemDateTimeEdit})
         Me.gcUserAccounts.Size = New System.Drawing.Size(1120, 770)
-        Me.gcUserAccounts.TabIndex = 0
+        Me.gcUserAccounts.TabIndex = 1
         Me.gcUserAccounts.ToolTipController = Me.ToolTipController
         Me.gcUserAccounts.UseDirectXPaint = DevExpress.Utils.DefaultBoolean.[True]
         Me.gcUserAccounts.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.gvUserAccounts})
@@ -603,7 +603,7 @@ Partial Class frmMain
         Me.acAdEntries.SelectElementMode = DevExpress.XtraBars.Navigation.SelectElementMode.MouseDown
         Me.acAdEntries.ShowFilterControl = DevExpress.XtraBars.Navigation.ShowFilterControl.Always
         Me.acAdEntries.Size = New System.Drawing.Size(280, 770)
-        Me.acAdEntries.TabIndex = 1
+        Me.acAdEntries.TabIndex = 0
         Me.acAdEntries.ToolTipController = Me.ToolTipController
         Me.acAdEntries.UseDirectXPaint = DevExpress.Utils.DefaultBoolean.[True]
         Me.acAdEntries.ViewType = DevExpress.XtraBars.Navigation.AccordionControlViewType.HamburgerMenu

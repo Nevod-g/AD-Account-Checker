@@ -20,15 +20,15 @@ Partial Class frmAdObject
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
-        Me.meInfo = New DevExpress.XtraEditors.MemoEdit()
         Me.sbGetPropertyValue = New DevExpress.XtraEditors.SimpleButton()
         Me.tePropertyValue = New DevExpress.XtraEditors.TextEdit()
         Me.tePropertyName = New DevExpress.XtraEditors.TextEdit()
+        Me.meInfo = New DevExpress.XtraEditors.MemoEdit()
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanelControl1.SuspendLayout()
-        CType(Me.meInfo.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tePropertyValue.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.tePropertyName.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.meInfo.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'PanelControl1
@@ -42,15 +42,6 @@ Partial Class frmAdObject
         Me.PanelControl1.Size = New System.Drawing.Size(690, 29)
         Me.PanelControl1.TabIndex = 4
         '
-        'meInfo
-        '
-        Me.meInfo.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.meInfo.Location = New System.Drawing.Point(0, 0)
-        Me.meInfo.Name = "meInfo"
-        Me.meInfo.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
-        Me.meInfo.Size = New System.Drawing.Size(690, 221)
-        Me.meInfo.TabIndex = 0
-        '
         'sbGetPropertyValue
         '
         Me.sbGetPropertyValue.ImageOptions.Image = Global.Adac.My.Resources.Resources.next_16x16
@@ -58,7 +49,7 @@ Partial Class frmAdObject
         Me.sbGetPropertyValue.Location = New System.Drawing.Point(173, 3)
         Me.sbGetPropertyValue.Name = "sbGetPropertyValue"
         Me.sbGetPropertyValue.Size = New System.Drawing.Size(131, 23)
-        Me.sbGetPropertyValue.TabIndex = 1
+        Me.sbGetPropertyValue.TabIndex = 2
         Me.sbGetPropertyValue.Text = "Get Property Value"
         '
         'tePropertyValue
@@ -70,7 +61,7 @@ Partial Class frmAdObject
         Me.tePropertyValue.Properties.NullText = "NA"
         Me.tePropertyValue.Properties.ReadOnly = True
         Me.tePropertyValue.Size = New System.Drawing.Size(375, 20)
-        Me.tePropertyValue.TabIndex = 2
+        Me.tePropertyValue.TabIndex = 3
         '
         'tePropertyName
         '
@@ -78,7 +69,16 @@ Partial Class frmAdObject
         Me.tePropertyName.Name = "tePropertyName"
         Me.tePropertyName.Properties.NullValuePrompt = "Input Property Name"
         Me.tePropertyName.Size = New System.Drawing.Size(162, 20)
-        Me.tePropertyName.TabIndex = 3
+        Me.tePropertyName.TabIndex = 1
+        '
+        'meInfo
+        '
+        Me.meInfo.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.meInfo.Location = New System.Drawing.Point(0, 0)
+        Me.meInfo.Name = "meInfo"
+        Me.meInfo.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder
+        Me.meInfo.Size = New System.Drawing.Size(690, 221)
+        Me.meInfo.TabIndex = 0
         '
         'frmAdObject
         '
@@ -93,9 +93,9 @@ Partial Class frmAdObject
         Me.Text = "Directory Entry Information"
         CType(Me.PanelControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanelControl1.ResumeLayout(False)
-        CType(Me.meInfo.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tePropertyValue.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.tePropertyName.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.meInfo.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
